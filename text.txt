@@ -1,1327 +1,1191 @@
-ARTICLE
-Simple descriptor derived from symbolic
-regression accelerating the discovery of new
-perovskite catalysts
-Baicheng Weng1,2,3,6, Zhilong Song2,6, Rilong Zhu4, Qingyu Yan4, Qingde Sun2, Corey G. Grice1,
-Yanfa Yan
-1✉& Wan-Jian Yin
-2,5✉
-Symbolic regression (SR) is an approach of interpretable machine learning for building
-mathematical formulas that best ﬁt certain datasets. In this work, SR is used to guide the
-design of new oxide perovskite catalysts with improved oxygen evolution reaction (OER)
-activities. A simple descriptor, μ/t, where μ and t are the octahedral and tolerance factors,
-respectively, is identiﬁed, which accelerates the discovery of a series of new oxide perovskite
-catalysts with improved OER activity. We successfully synthesise ﬁve new oxide perovskites
-and characterise their OER activities. Remarkably, four of them, Cs0.4La0.6Mn0.25Co0.75O3,
-Cs0.3La0.7NiO3, SrNi0.75Co0.25O3, and Sr0.25Ba0.75NiO3, are among the oxide perovskite
-catalysts with the highest intrinsic activities. Our results demonstrate the potential of SR for
-accelerating the data-driven design and discovery of new materials with improved properties.
-https://doi.org/10.1038/s41467-020-17263-9
-OPEN
-1 Department of Physics & Astronomy, and Wright Center for Photovoltaics Innovation and Commercialization, The University of Toledo, Toledo, OH 43606,
-USA. 2 College of Energy, Soochow Institute for Energy and Materials InnovationS (SIEMIS), and Jiangsu Provincial Key Laboratory for Advanced Carbon
-Materials and Wearable Energy Technologies, Soochow University, 215006 Suzhou, China. 3 College of Chemistry and Chemical Engineering, Central South
-University, 410083 Changsha, China. 4 College of Chemistry and Chemical Engineering, Hunan University, 410082 Changsha, China. 5 Key Lab of Advanced
-Optical Manufacturing Technologies of Jiangsu Province & Key Lab of Modern Optical Technologies of Education Ministry of China, Soochow University,
-215006 Suzhou, China. 6These authors contributed equally: Baicheng Weng, Zhilong Song. ✉email: yanfa.yan@utoledo.edu; wjyin@suda.edu.cn
-NATURE COMMUNICATIONS |   (2020) 11:3513 | https://doi.org/10.1038/s41467-020-17263-9 | www.nature.com/naturecommunications
-1
-1234567890():,;
-M
-achine learning (ML) is increasingly used in the ﬁeld of
-materials informatics as an effective tool for discovering
-quantitative
-structure—
-or
-composition—property
-relationships that can accelerate materials design1–5. However,
-the black-box model of ML is often criticized not able to provide
-new “physical laws”, which limits its potential in certain cases6,7.
-Symbolic regression (SR) is an approach of interpretable machine
-learning that simultaneously searches for the optimal mathema-
-tical formula of a function and set of parameters in the func-
-tion1,8.
-Therefore,
-SR
-is
-capable
-to
-deliver
-interpretable
-mathematical formulas that may provide direct guidance for
-materials design. Despite the great potential, the application in
-the ﬁeld of material science is still limited.
-In this communication, we demonstrate that SR can construct
-a simple descriptor that enables the acceleration of the materials
-discovery for oxide perovskite catalysts. Oxide perovskites
-(ABO3) are an important family of catalysts for OER applica-
-tions9,10, which are in high demand for renewable energy pro-
-duction and storage, such as hydrogen production from water-
-splitting11 and rechargeable metal-air batteries12, because of their
-structural ﬂexibility, compositional versatility, and chemical sta-
-bility13. Moreover, oxide perovskites have recently been extended
-to the bifunctional application of OER and oxygen reduction
-reaction14,15. The catalysis activities of oxide perovskite catalysts
-can be described by descriptors, as demonstrated by various
-studies over the past sixty years. Several descriptors, such as the
-reaction free energy16,17 and eg occupancy9,18, have been suc-
-cessfully used to understand the trend of OER activity and
-achieved great success in this regard. Nevertheless, those
-descriptors require prior knowledge based on density functional
-theory (DFT) calculations therefore bear limited applicability to
-design new materials, where DFT-calculated values are unknown
-a priori and highly dependent on the used methodologies19.
-Meanwhile, it is difﬁcult for DFT calculation to accurately
-determine eg occupancy where the surface spin state is not well
-known20. A good descriptor should be simple and yet provide
-physical insight21, which will guide and accelerate the discovery
-of new perovskite oxide OER catalysts. In this work, we propose
-that SR is perfectly suitable for identifying suitable descriptor to
-accelerating the discovery of new perovskite catalysts.
-Figure 1 shows the workﬂow diagram of this study. SR analysis
-may not require massive datasets, if the datasets used are
-consistent and reliable1,22. Therefore, we ﬁrstly synthesise 18
-well-studied oxide perovskite catalysts to produce consistent and
-comparable datasets of OER activity for SR analysis. A descriptor
-with the balance of simplicity and accuracy is then chosen and
-help develop strategies to accelerate the discovery of new oxide
-perovskites. The generality of the descriptor is conﬁrmed by
-analysing data reported independently by other research groups.
-Based on this descriptor, materials screening is conducted to
-search for new oxide perovskite catalysts with improved OER
-activities. To validate the predictions, a few numbers of new oxide
-perovskites with potentially high OER activity are synthesised and
-their OER activities are characterised and compared with their
-predicted values and those of current state-of-the-art oxide per-
-ovskite catalysts.
-Results
-Data acquisition. Comparable training data used in SR analysis
-are of crucial importance for SR in order to produce useful
-mathematical formulas23. Since the ﬁrst discovery of oxide per-
-ovskite LaNiO3 as OER catalyst in 1970s24, the chemical man-
-agement of A- or B-site cations has been used to tune the OER
-activity, permitted by the structural and chemical ﬂexibility of
-perovskite structures. The results reported by different groups
-and produced under different experimental conditions over a
-period of half a century are summarised in a recent review arti-
-cle13. However, the comparability of those data is doubtful due to
-different environments of experiments and measurements. To
-ensure meaningful and valuable SR analysis, we synthesised
-eighteen known oxide perovskite catalysts (Supplementary Fig. 1;
-Supplementary Table 1). Four samples were made for each per-
-ovskite and OER measurement was conducted three times under
-the same conditions with freshly made catalyst inks. Four each
-measurement, the VRHE values at ﬁve current densities of 50 µA
-cm−2, 5 mA cm−2, 10 mA cm−2, 15 mA cm−2 and 20 mA cm−2
-in linear sweep voltammetry (LSV) curve were adopted for SR
-analysis. Therefore, there are totally 18 perovskites × 4 samples ×
+Band Alignment of Oxides by Learnable Structural-Descriptor-Aided
+Neural Network and Transfer Learning
+Shin Kiyohara,* Yoyo Hinuma, and Fumiyasu Oba*
+Cite This: J. Am. Chem. Soc. 2024, 146, 9697−9708
+Read Online
+ACCESS
+Metrics & More
+Article Recommendations
+*
+sı
+Supporting Information
+ABSTRACT: The band alignment of semiconductors, insulators,
+and dielectrics is relevant to diverse material properties and device
+structures utilizing their surfaces and interfaces. In particular, the
+ionization potential and electron affinity are fundamental quantities
+that describe surface-dependent band-edge positions with respect
+to the vacuum level. Their accurate and systematic determination,
+however, demands elaborate experiments or simulations for well-
+characterized surfaces. Here, we report machine learning for the
+band alignment of nonmetallic oxides using a high-throughput first-
+principles calculation data set containing about 3000 oxide
+surfaces. Our neural network accurately predicts the band positions
+for relaxed surfaces of binary oxides simply by using the
+information on bulk structures and surface termination planes.
+Moreover, we extend the model to naturally include multiple-cation effects and transfer it to ternary oxides. The present approach
+enables the band alignment of a vast number of solid surfaces, thereby opening the way to a systematic understanding and materials
+screening.
+■INTRODUCTION
+The ionization potential (IP) and electron affinity (EA) of a
+nonmetallic solid are defined as the energy levels of the valence
+band maximum (VBM) and conduction band minimum
+(CBM) with respect to the vacuum level, respectively. They
+show not only how easily an electron is released or accepted
+but also information about the relative band positions of
+materials. Such band alignments or lineups play crucial roles in
+our understanding, design, and development of materials and
+devices utilizing surfaces and heterointerfaces, including
+photocatalysts,1−3 photovoltaics,4−6 and all other heterostruc-
+tured electronic and optoelectronic devices.7−13 The lattice
+mismatch, local atomic structure, and charge transfer should
+also be considered for depicting complete band alignments at
+heterointerfaces; nevertheless, IPs and EAs are fundamental
+information for designing interfacial functionalities in addition
+to surface-related properties.7
+The IPs and EAs of solids involve contributions of surface
+dipole moments. Thus, they significantly depend on the atomic
+and electronic structures in the vicinity of the surfaces and
+therefore on the surface orientation and composition.14−16
+Computationally, first-principles calculations have successfully
+quantified IPs and EAs.15−23 Separate calculations of bulk and
+surface systems are performed in a typical procedure for the
+evaluation of IPs and EAs. Bulk calculations offer VBM and
+CBM positions with respect to a reference level; surface
+calculations offer the differences between the vacuum and
+reference levels, which include the surface dipole contributions
+to electrostatic potentials. IPs and EAs are then obtained by
+the alignment of the bulk and surface reference levels.
+However, an accurate and high-throughput evaluation of IPs
+and EAs is not straightforward because both processes are
+time-consuming. Density functional theory calculations using
+standard local and semilocal functionals produce large errors in
+the VBM and CBM positions, requiring us to use more
+elaborate and computationally demanding approaches, e.g.,
+hybrid functionals including nonlocal exchange contributions
+and GW approximations based on many-body perturbation
+theory.15−20,24,25 Surfaces have both macroscopic and micro-
+scopic degrees of freedom, namely, the surface orientation as
+given by Miller indices and the location of the termination
+plane. Substantial reconstruction from ideal structures also
+takes place at some surfaces,26−33 which can significantly affect
+band positions as reported for perovskite oxides and TiO2.32,33
+Therefore, even one material has a large variety of surface
+atomic structures, and systematic evaluation of their IPs and
+EAs requires huge amounts of computation.
+Received:
+December 2, 2023
+Revised:
+February 25, 2024
+Accepted:
+February 27, 2024
+Published: March 28, 2024
+Article
+pubs.acs.org/JACS
+© 2024 The Authors. Published by
+American Chemical Society
+9697
+https://doi.org/10.1021/jacs.3c13574
+J. Am. Chem. Soc. 2024, 146, 9697−9708
+This article is licensed under CC-BY 4.0
+Downloaded via 14.12.123.64 on July 3, 2024 at 22:03:57 (UTC).
+See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.
+Recently, machine learning has been widespread in materials
+science. Virtual screening based on machine learning is an
+efficient way to explore new materials with desired functions,
+where a surrogate model enables us to virtually predict material
+properties.34−39 In particular, theoretical calculations can
+generate comparatively large data sets that are prerequisites
+for constructing accurate surrogate models. Previous studies
+have reported successful materials screening for various
+properties by machine learning in combination with theoretical
+calculations.35−38,40−44
+In this article, we present a regression model based on an
+artificial neural network (ANN) using the smooth overlap of
+atom positions (SOAPs)45 as input descriptors to predict the
+IPs and EAs of nonmetallic oxides (see Figure 1). First-
+principles calculations based on a non-self-consistent dielectric-
+dependent hybrid functional approach21 allow for the accurate
+and efficient evaluation of the IPs and EAs of about 3000
+binary and ternary oxide surfaces. The ANN model
+constructed using this data set accurately predicts the IPs
+and EAs of binary oxides despite the model using the
+information before structural relaxation at surfaces as the
+input, namely, bulk crystal structures and surface termination
+planes of the oxides of interest. Moreover, we enable the ANN
+model to be applied to ternary oxides by developing
+“learnable” SOAPs, which can incorporate atom species
+varieties while keeping low descriptor dimensions.
+■RESULTS AND DISCUSSION
+High-Throughput First-Principles Calculations of IPs
+and EAs of Binary Oxides. Figure 2a shows distributions of
+the theoretical IPs and EAs in the binary oxide data set for
+2195 nonpolar surfaces; all IP and EA values can be found in
+the Supporting Information. Here, we focus on nonpolar
+surfaces because the modeling of polar surfaces requires the
+consideration of system- and environment-dependent charge-
+compensation mechanisms26,27,46 and therefore their high-
+throughput calculations are not straightforward. The horizontal
+axis in Figure 2a is the constituent cation species, each of
+which contains various surfaces of several polymorphs. We find
+the tendency that the IP and EA values depend largely on the
+cation species, although the variety in the crystal and surface
+atomic structures leads to deviations of ∼±1 eV from their
+average values. The calculated IPs and EAs for selected
+surfaces are shown with available experimental values in Figure
+2b. Although the IPs and EAs are, by nature, rather sensitive to
+the detailed structures and conditions of the experimentally
+investigated surfaces, reasonable agreement between the
+experiment and theory is recognized overall. The non-self-
+consistent dielectric-dependent hybrid functional approach
+taken here also well-reproduces the experimental IPs and EAs
+of group IV, III−V, and II−VI semiconductor surfaces.21
+These comparisons with the experimental results demonstrate
+the accuracy of our high-throughput surface calculation data.
+Construction of ANN Models. Using the binary oxide
+data set, we constructed the ANN (hereinafter called simple-
+ANN) as shown in Figure 3a. The SOAP descriptors, which
+sophisticatedly include structural information such as the bond
+length, bond angle, and coordination number,45 are evaluated
+for unrelaxed surfaces and inputted in the first layer to describe
+the IPs and EAs at relaxed surfaces. The SOAPs in this study
+were preprocessed as follows. When multiple elements are
+included in a system, the concatenations of the SOAPs based
+on the elemental pairs (hereinafter called element-pair SOAPs)
+are generally used for describing atomic structures in a
+system47 as shown in the bottom left panel of Figure 4. Here,
+we consider 41 atom species simultaneously. Thus, the
+element-pair SOAPs have several tens of thousands of
+dimensions because SOAPs of a pair of elements have several
+tens to several hundreds of dimensions. To reduce the number
+of descriptor dimensions and prevent overfitting, we dealt with
+the 40 cation species as the same species when calculating
+SOAPs and oxygen as an anion, resulting in calculating the
+SOAPs of three pairs, namely, cation−cation, cation−anion,
+and anion−anion combinations (hereinafter called cation−
+anion-pair SOAPs), as shown in the bottom center panel of
+Figure 4. The cation−anion-pair SOAPs were calculated on
+each atom site in a system while the IP and EA need one-to-
+one correspondence with a system. Thus, we averaged the
+cation−anion-pair SOAPs in a system for inputs. Assuming
+that the information about the vicinity of the surfaces is critical
+to the IPs and EAs, we extracted the surface-region atoms by
+the scheme developed in ref 48 and averaged their SOAPs.
+More details of the architecture of the simple-ANN and
+SOAPs are described in “Machine Learning: SOAP Descrip-
+tors” and “Procedures for Regression” in Methods. The best
+combinations of nmax and lmax, which are hyperparameters for
+SOAPs (see “Machine Learning: SOAP Descriptors” in
+Methods), are 3 and 7 based on root mean squared errors
+(RMSEs) and 5 and 3 based on mean absolute errors (MAEs),
+Figure 1. Schematic of prediction of IPs and EAs in nonmetallic
+solids by theoretical calculations and machine learning. The
+theoretical calculations from first principles typically use a
+combination of surface and bulk models to evaluate the energy
+difference between the vacuum level and the VBM (IP) or CBM
+(EA). Our ANN predicts the IPs and EAs of relaxed surfaces by
+simply inputting the information on the bulk crystal structure and the
+surface index and termination plane.
+Journal of the American Chemical Society
+pubs.acs.org/JACS
+Article
+https://doi.org/10.1021/jacs.3c13574
+J. Am. Chem. Soc. 2024, 146, 9697−9708
+9698
+respectively (see Figure S1). Hereinafter, we show the results
+for nmax and lmax of 5 and 3, respectively; the other case is
+shown in Table S1. It should be noted that the results do not
+depend much on the combinations of nmax and lmax.
+Figure 5a,b show the predicted IPs and EAs of the training
+data (gray dots) and test data (orange and green dots),
+respectively. Most of the data points are located near the
+diagonal lines, which means that the IPs and EAs predicted by
+the ANN are considerably close to the corresponding
+theoretical values from first-principles calculations. The
+coefficient of determination (R2), RMSE, and MAE of the
+test data are 0.90, 0.31, and 0.22 eV for the IPs and 0.90, 0.32,
+and 0.23 eV for the EAs, respectively. The high prediction
+accuracy indicates that the ANN model has learned to
+differentiate the cation species through structural information,
+even though elemental information is not explicitly given. In
+addition, the errors are much smaller than the aforementioned
+distributions of the IPs and EAs for each cation species in the
+data set, which indicates proper learning of the surface
+structure dependence. It is noteworthy that our ANN model
+can also learn and predict surface energies at the level of
+accuracy shown in Table S2, enabling us to screen out unstable
+or unreasonable surfaces without explicit first-principles
+calculations.
+Although the simple-ANN model shows valuable prediction
+accuracy, it has a disadvantage; that is, it equally weights
+surface-region atoms in a system when averaging their SOAPs.
+To overcome this disadvantage and further enhance the
+prediction accuracy, we introduced an attention layer into our
+ANN architecture.49,50 Figure 3b shows the ANN architecture
+Figure 2. Distribution of theoretical IPs and EAs of binary oxides and comparison with experiments. (a) Upper panel shows the distribution of the
+IPs and EAs of the respective binary oxides. Orange and green dots are IPs and EAs, respectively. Cross and circle symbols are Tasker’s type I and II
+surfaces,64 respectively. The bottom panel is the number of surfaces, where yellow and dark blue bars are types I and II, respectively. (b)
+Theoretical IPs and EAs versus reported experimental values for selected binary oxides. The upper edges of the pale orange bars and the lower
+edges of the light green bars are calculated VBMs and CBMs with respect to the vacuum level (set at 0 eV), respectively. The orange and green
+solid lines are experimentally reported IPs and EAs, respectively; the dashed lines are derived by combining experimental IPs or EAs and
+experimental band gaps. The experimental data are taken from refs 70 and 71 for MgO, refs 72 and 73 for Al2O3, ref 74 for TiO2, ref 75 for V2O5,
+ref 76 for Cu2O, refs 77−79 for ZnO, refs 80 and 81 for Ga2O3, ref 82 for MoO3, refs 83 and 84 for Ag2O, refs 85 and 86 for In2O3, ref 87 for CeO2,
+ref 83 for Ta2O5, and ref 88 for WO3. The surface orientations have not been presented in the experimental reports for V2O5, Cu2O, MoO3, Ag2O,
+In2O3, Ta2O5, and WO3. Therefore, all theoretical IPs and EAs of binary oxides with the indicated space groups are depicted in the figure. Note that
+there are many types of surfaces for V2O5, MoO3, and Ta2O5, and the bars for each surface are extremely narrow.
+Journal of the American Chemical Society
+pubs.acs.org/JACS
+Article
+https://doi.org/10.1021/jacs.3c13574
+J. Am. Chem. Soc. 2024, 146, 9697−9708
+9699
+with an attention layer (hereinafter called ANN w/AL). In
+contrast to the simple-ANN model, cation−anion-pair SOAPs
+of a system are inputted into the ANN without averaging and
+then averaged after passing through the inserted attention layer
+just before the output layer. The attention layer outputs a
+scalar value, and afterward, the value is input into a softmax
+function. Thus, each SOAP in a system has a weight, the sum
+of which is one. The transformed cation−anion-pair SOAPs
+are multiplied with the weights, averaged, and finally input into
+the output layer. As shown in Figures 5c,d, the prediction
+accuracy is evidently improved by introducing the attention
+layer, with an R2 of 0.90, RMSE of 0.29 eV, and MAE of 0.21
+eV for the IPs, and 0.93, 0.27, and 0.19 eV, respectively, for the
+EAs.
+Furthermore, the ANN w/AL can automatically estimate the
+magnitude of the impact of each atom site on the IPs and EAs.
+Figure 5e exemplifies this feature for the case of a (001) surface
+of Sb2O3 (space group: Pccn). The IP prediction clearly shows
+the higher importance of the antimony and oxygen atoms in
+the vicinity of the surface, while the halves of the antimony
+atoms on the surface are especially relevant to the EA. The
+weight profiles of some other binary oxides are shown in
+Figure 3. Architecture of ANNs. (a) Simple-ANN, (b) ANN w/AL, and (c) ANN w/L-SOAP. Each circle in the figure is a node where the input
+and output are scalars. Edges between nodes in two adjacent layers are fully connected but omitted for easy visualization.
+Journal of the American Chemical Society
+pubs.acs.org/JACS
+Article
+https://doi.org/10.1021/jacs.3c13574
+J. Am. Chem. Soc. 2024, 146, 9697−9708
+9700
+Figure S2. The profiles depend on the oxides and the IP or EA
+but have features common to the surfaces of the same oxides.
+Generally, the atoms on the second layers from the surfaces
+tend to have the smallest weights and the IPs put more
+importance on the surface atoms than the EAs.
+Extension of SOAPs and Application to Ternary
+Oxides. Next, we focus on ternary systems. Figure 6a shows
+the theoretical IPs and EAs for 718 ternary oxide surfaces, with
+respect to the constituent cation species. The distributions of
+IPs and EAs are much larger than those in the binary systems
+partly because of the inclusion of multiple cation species in the
+ternary systems, as well as differences in the crystal and surface
+structures between the binary and ternary systems.
+In the element-pair SOAPs, information about elements can
+be explicitly incorporated by concatenation of the SOAPs of
+each elemental pair (see bottom left panel of Figure 4), but
+Figure 4. Schematic of conventional and learnable SOAP descriptors. The element-pair SOAPs (bottom left panel) are concatenations of the
+SOAPs of each elemental pair; the cation−anion-pair SOAPs (bottom center panel) are concatenations of three pairs, namely, cation−cation,
+cation−anion, and anion−anion combinations; and L-SOAPs (bottom right panel) have element-based learnable weights, which are automatically
+adjusted during ANN training.
+Figure 5. Theoretical and predicted IPs and EAs using simple-ANN and ANN w/AL. (a) IPs and (b) EAs obtained by first-principles calculations
+versus those predicted by the simple-ANN. (c) IPs and (d) EAs by first-principles calculations versus those predicted by the ANN w/AL. The
+orange or green and gray dots represent the test and training data, respectively. (e) Atom-site weights from the attention layer in the IP and EA
+prediction of a (001) surface of Sb2O3 whose space group is Pccn (index is 20 in Table S3). The frame indicates the surface supercell where the
+upper vacant region corresponds to the vacuum layer. Larger and smaller circles are the Sb and O atoms, respectively. The weights are represented
+by the shades of the atom colors: blue for Sb and pink for O. The weights are normalized so that the largest weight is one.
+Journal of the American Chemical Society
+pubs.acs.org/JACS
+Article
+https://doi.org/10.1021/jacs.3c13574
+J. Am. Chem. Soc. 2024, 146, 9697−9708
+9701
+Figure 6. Distribution of theoretical IPs and EAs of ternary oxides and prediction accuracy of transfer learning. (a) Distribution of theoretical IPs
+and EAs. Ternary oxides include two cation species, and the same data points are shown at both cation species. The other details are the same as
+those for Figure 2a. (b,c) Prediction accuracy of transfer learning for IPs and EAs, respectively. The filled and open symbols are the results of the
+ANN w/L-SOAP and the ANN w/AL, respectively. The horizontal axis is the ratio of the ternary data for training to all ternary data.
+Journal of the American Chemical Society
+pubs.acs.org/JACS
+Article
+https://doi.org/10.1021/jacs.3c13574
+J. Am. Chem. Soc. 2024, 146, 9697−9708
+9702
+this results in several thousands of dimensions in multispecies
+systems (see “Machine Learning: SOAP Descriptors” in
+Methods). The cation−anion-pair SOAPs have manageable
+dimensions but cannot differentiate cations in a system, which
+may be crucial for the ternary systems. Hence, we developed
+element-based learnable-weighted SOAPs (L-SOAPs), which
+have sufficient information about atomic species despite the
+considerably small number of dimensions. The details of the L-
+SOAPs are described in “Machine Learning: SOAP Descrip-
+tors” in Methods.
+The new architecture of the ANN with L-SOAP (hereinafter
+called ANN w/L-SOAP) showed an R2 of 0.90, RMSE of 0.31
+eV, and MAE of 0.23 eV for the IPs, and 0.91, 0.29, and 0.21
+eV, respectively, for the EAs of the binary systems; this is
+comparable to the accuracy of the ANN w/AL. It is
+noteworthy that the L-SOAP has only one-third of the number
+of dimensions of the cation−anion-pair SOAP. The number of
+dimensions of element-pair SOAPs rapidly increases with the
+number of atomic species, whereas the L-SOAP keeps the
+same number of dimensions. This feature of the ANN w/L-
+SOAP model is a great advantage for dealing with multiple-
+element systems.
+The trained model, however, cannot be directly applied to
+ternary systems, unlike the simple-ANN and the ANN w/AL
+models, because multiple-cation effects (eq 10 in Methods) are
+not learned from the binary systems. Thus, we trained the
+models using the binary oxide data set and afterward retrained
+them using the ternary oxide data set. In other words, we
+performed transfer learning from the binary systems to the
+ternary systems, where all the learning parameters in the ANN
+w/AL were retrained using the ternary oxide data set. The ratio
+of the ternary data for training to all ternary data was set at 10,
+30, 50, and 70%, where the residues were used as test data. The
+effectiveness of “transferring” is shown in Figure S3. A clear
+improvement in the prediction accuracy is found for transfer
+learning compared with learning from scratch.
+Figure 6b shows the performance of the IP prediction with
+an nmax of 5 and lmax of 3; see Figure S4 for the parity plots and
+Figure S5 for the case of an nmax of 3 and lmax of 7. For
+comparison, the results of the transferred ANN w/AL are
+included in Figure 6. The ANN w/L-SOAP and the ANN w/
+AL exhibit almost the same levels of performance in all the
+ratios of training and test data. The IPs relate to the VBMs, in
+which oxygen 2p-orbitals are the major components in most
+binary oxides. This fact also applies to the ternary oxides
+although the weak multiple-cation effects on the VBMs exist.
+Because the ANN w/L-SOAP mainly learns cation−cation
+interactions here, both of the ANNs show similar performances
+regarding the IPs.
+We now move on to the prediction of the EAs. The main
+components of the CBMs are cation orbitals that are system-
+dependent. Because an accurate prediction of the EAs requires
+learning such CBM characters, one expects that the ANN w/
+AL, which cannot explicitly incorporate the effects of the
+variety of cations, would be inaccurate. Indeed, the ANN w/
+AL shows considerably poor accuracy when the ratio of the
+training data is 10% (Figure 6c). On the other hand, the ANN
+w/L-SOAP is clearly more accurate at the same training/test
+data ratio. Surprisingly, the performance of the ANN w/L-
+SOAP at the 10% ratio is almost equal to that of the ANN w/
+AL at the 70% ratio, and the performance at the 70% ratio is
+comparable to that of the IPs, indicating the successful
+incorporation of the multiple-cation effects during training.
+Thus, the ANN w/L-SOAP in combination with transfer
+learning makes accurate and systematic prediction of both IPs
+and EAs of ternary systems feasible.
+■CONCLUSIONS
+Our high-throughput first-principles calculations based on the
+non-self-consistent dielectric-dependent hybrid functional
+approach have enabled the construction of a large data set of
+IPs and EAs for 2195 binary and 718 ternary oxide surfaces.
+The accuracy of the calculated IPs and EAs has been confirmed
+by comparison with available experimental values for the
+selected binary oxides as shown in Figure 2b. Using the data
+set, we constructed the simple-ANN model to predict the IPs
+and EAs of the binary oxides. The cation−anion-pair SOAPs
+were used to describe surface atomic structures before
+structural relaxation, by simply inputting the crystal structures
+and surface termination planes. The IPs and EAs of relaxed
+surfaces were accurately predicted using the SOAP structural
+descriptors even though elemental information was not
+explicitly given. Furthermore, introducing an attention layer
+to the simple-ANN model allows for automatically determining
+relevant atoms in surface regions and enhancing the prediction
+performance. This feature of the attention layer can collaterally
+help us to analyze chemical and physical origins of target
+properties. Finally, we extended the SOAPs to transfer the
+model to the ternary oxides by introducing the element-based
+learnable weights to the calculation of the SOAPs and by
+connecting this process to the ANN w/AL. This transfer
+learning model based on the ANN w/L-SOAP was able to
+incorporate the small effects of the cations on the VBMs with
+the small data set in the IP prediction. Moreover, apparent
+improvement was demonstrated regarding the EA prediction,
+indicating that diverse cation effects on the CBMs were well
+incorporated.
+The ANN w/L-SOAP developed here enables the band
+alignment of a vast number of metal oxide surfaces, which is
+fundamental to the design of various materials and devices.
+Moreover, it is not restricted to the prediction of surface
+properties of metal oxides but can be naturally applied to other
+multicomponent systems and other properties in the same way
+as crystal graph convolutional neural networks.38 Thus, we
+believe that our new model paves the way for the high-
+throughput prediction of diverse materials and properties.
+■METHODS
+Screening of First-Principles Calculation Data: Binary
+Oxides. The binary oxides considered in this work are listed in
+Table S3. The table contains 134 nonmetallic oxides whose band
+structures are formally constructed by fully occupied or empty atomic
+orbitals, including 41 types of atom species. To cover a wide variety of
+stable and metastable polymorphs, experimentally determined crystal
+structures of binary oxides were used as prototypes, and the cations of
+the prototypes were substituted with isovalent cations. The details of
+the cation substitution procedures are described in ref 51.
+We excluded the oxides without the special isometry that nonpolar
+slabs should have.52 In addition, we screened out binary oxides with
+rather narrow theoretical band gaps using criteria of band gaps smaller
+than 0.1 eV and ion-clamped static dielectric constants larger than 20,
+resulting in the 127 binary oxides with cation species other than those
+in the parentheses in Table S3. Then, we generated 3383 nonpolar
+surface models for the 127 binary oxides with relatively small Miller
+indices as listed in Table S3. To exclude unreasonable surface
+structures, we selected surfaces that were smoothly optimized during
+first-principles calculations and those with surface energies higher
+Journal of the American Chemical Society
+pubs.acs.org/JACS
+Article
+https://doi.org/10.1021/jacs.3c13574
+J. Am. Chem. Soc. 2024, 146, 9697−9708
+9703
+than 0 J/m2. In addition, we excluded the outliers in surface energy,
+which did not fulfill the following inequality
+E
+E
+E
+E
+E
 3
-measurements × 5
-current
-densities = 1080
-data
-points
-(Fig. 2a). The values were then normalised by the catalyst loading
-concentration and Brunauer–Emmet–Teller (BET) surface area
-(Supplementary Table 2) and shown in Fig. 2a and Supplemen-
-tary Data 1–5. Details of the materials synthesis, along with the
-structural and OER characterisation, can be found in the
-Yes
-Yes
-No
-No
-Material screening
-by descriptor
-Targeted material
-design by descriptor
-Fig. 1 Workﬂow diagram. It contains four major parts: dataset generation (blue), SR (red), materials design and screening (green) and experimental
-veriﬁcation (brown).
-ARTICLE
-NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-020-17263-9
-2
-NATURE COMMUNICATIONS |   (2020) 11:3513 | https://doi.org/10.1038/s41467-020-17263-9 | www.nature.com/naturecommunications
-“Methods”. Seven of these oxide perovskite catalysts were also
-reported by Suntvich et al.9 and the results from both groups
-showed the same trend in VRHE values (Supplementary Fig. 2),
-although the absolute values are slightly different.
-SR training. With the available experimental data shown in
-Fig. 2a, SR was then adopted to construct mathematical formula
-linking the materials parameters and VRHE. To ensure that the SR
-analysis determines mathematical formulas that are useful for our
-purpose, it is critical to select relevant parameters to be included
-in the mathematical formulas based on prior knowledge1. Con-
-sidering the importance of previous descriptors3,9,12,13,25,26, we
-chose electronic parameters such as the number of d electrons for
-TM ions (Nd), electronegativity values χA and χB, and valence
-states QA, as well as structural parameters such as ionic radii RA,
-the tolerance factor t, and the octahedral factor μ, where A and B
-refer to the A- and B-site cations, respectively (Table 1). The
-tolerance factor t, deﬁned as
-rAþrO
-ﬃﬃ
-2
-p
-ðrBþrOÞ and octahedral factor μ,
-deﬁned as rB/rO, are commonly used features in ML studies of
-perovskites23,27,28.
-The mathematical formulas were then generated and selected
-by using SR with genetic programming (GPSR) as implemented
-in gplearn code29. The ﬂowchart of GPSR process in this work is
-described in Fig. 2b. In this work, SR initially builds a population
-of random mathematical formulas with these parameters as
-variables. Then, these mathematical formulas breed, mutate, and
-evolve to form new ones via genetic programming. The derived
-mathematical formulas compete to model experimental data by
-evaluating the mean absolute errors (MAEs) between the
-predicted and experimental VRHE. A grid search of hyper-
-parameters resulted in ~8640 mathematical formulas (descrip-
-tors), which were characterised by their MAE’s and complexities,
-as described in Fig. 3a. The hyperparameters setup can be found
-in Method part and extended information about GPSR can be
-found in Supporting Information.
-Descriptor generation and analysis. Of the produced descrip-
-tors, only those with low MAE (high accuracy) and low com-
-plexity are suitable for guiding the discovery of new oxide
-perovskite catalysts. The nine mathematical formulas at the
-Pareto front [marked as A–I in Fig. 3a] that met the criteria of
-simplicity and accuracy among the 43,200,000 candidates are
-shown in Table 2. Among them, μ/t is the best compromise
-between complexity and accuracy. To clearly show the correla-
-tion, the VRHE at current densities of 5 mA cm−2 are shown in
-terms of μ/t in Fig. 3b. For each perovskite, the average values and
-error bars are the experimental uncertainties from 12 measure-
-ment data (4 samples with each 3 measurements). Interestingly, it
-shows a linear and monotonic behaviour instead of prevalent
-volcano shape for conventional descriptors. Such linear correla-
-tions remain at other current densities, i.e. 50 µA cm−2, 10 mA
-cm−2, 15 mA cm−2 and 20 mA cm−2 as shown in Supplementary
-Fig. 3. To further verify the generality of this descriptor, we used
-μ/t to ﬁt the experimental work9 originally reporting the volcano
-shape for descriptor eg (Fig. 3c). As shown in Fig. 3d, μ/t provided
-a clear linear and monotonic correlation with VRHE, with MAE
-comparable to the volcano shape for descriptor eg. Apart from the
-seminal work of ref. 9, the generality of μ/t can be also conﬁrmed
-by recent works30–32 as their data reorganized in Supplementary
-Fig. 4. For experimental data spanning over sixty years from
-different groups (Table 6 of ref. 13), their VRHE values are reor-
-ganized according to their μ/t values; despite some discrepancies,
-a roughly linear correlation was observed for the majority of the
-data points (Supplementary Fig. 5). Such good correlation reveals
-that the SR-derived descriptors, e.g., μ/t indeed provide mean-
-ingful insights for OER activity of oxide perovskites.
-The descriptor μ/t reveals that the OER activity of oxide
-perovskite catalysts is closely related to the structural factors of
-the catalysts; i.e. a smaller μ and a larger t should lead to higher
-OER activity. Such a simple descriptor is superior to conventional
-descriptors since it does not require additional DFT calculations
-and can be directly used for materials design. Accordingly, we
-a
-b
-0
-50 µA/cm2
-VRHE(eV)
-1.4
-1.6
-1.8
-2.0
-2.2
-2.4
-2.6
-5 mA/cm2
-10 mA/cm2
-15 mA/cm2
-20 mA/cm2
-5
-10
-Materials index
-No. of experiments
-15
-20
-0
-2
-4
-6
-8
-10
-12
-Grid search of
-hyperparameters
-Create random mathematical formulas
-Calculate MAE of each formula
-min(MAE) < 0.01 eV
-or generations > 20
-Apply genetic operations
-0
-1
-6
 3
+surface,mean
+surface,std
+surface
+surface,mean
+surface,std
+×
+<
+<
++
+×
+(1)
+where Esurface is the surface energy of the objective surface, and
+Esurface,mean and Esurface,std are the mean and standard deviations of the
+surface energies, respectively, in which the surfaces are generated from
+the common bulk system to the objective surface, resulting in the data
+set with 2195 binary oxide surfaces for machine learning.
+Ternary Oxides. We screened and collected ternary oxide data
+from the Materials Project database53 in the following manner: (1)
+extract the most stable binary oxides of A and B, where A and B are
+any of the 40 cation elements; (2) draw a convex hull of the formation
+energies of A−B ternary oxides with respect to the A binary oxide and
+the B binary oxide; (3) select the ternary oxides on the convex hull;
+and (4) exclude the ternary oxides without the special isometry and
+with band gaps smaller than 0.1 eV. We then evaluated the band gaps
+using non-self-consistent dielectric-dependent hybrid functional
+calculations and screened the ternary oxides in the same way as the
+binary oxides. We obtained 344 ternary oxides through these
+processes. Then, we made the nonpolar surface models, where the
+maximum Miller indices were set to be 2. These surfaces were
+screened in the same way as the binary cases, resulting in 718 ternary
+oxide surface data.
+First-Principles Calculations of Band Positions. IPs and EAs
+are estimated as follows16
+IP
+(
+)
+(
+)
+vac
+surface
+ref
+surface,far
+VBM
+bulk
+ref
+bulk
+=
+(2)
+EA
+(
+)
+(
+)
+vac
+surface
+ref
+surface,far
+CBM
+bulk
+ref
+bulk
+=
+(3)
+where
+vac
+surface and
+ref
+surface,far are the vacuum level and the electrostatic
+reference level in the bulk-like region far from the surface,
+respectively. These quantities are obtained by calculations using
+surface supercells, each of which is composed of a slab of an oxide and
+a vacuum layer.
+VBM
+bulk ,
+CBM
+bulk , and
+ref
+bulk are the VBM, CBM, and
+electrostatic reference levels in the corresponding bulk model,
+respectively. These three values are obtained by calculations using
+bulk primitive cells.
+Computational Procedures for Bulk Systems. The calcu-
+lations were performed using the projector augmented-wave (PAW)
+method54 as implemented in the Vienna ab initio simulation package
+(VASP).55,56 The
+VBM
+bulk and
+CBM
+bulk were calculated by the approach
+reported in ref 21. In this scheme, the nonlocal exchange mixing
+parameter in the full-range hybrid functional of the Perdew−Burke−
+Ernzerhof (PBE0) form57,58 is set to be the inverse of the ion-clamped
+static dielectric constant of the system.59,60 The PBE functional tuned
+for solids (PBEsol)61 was used for the semilocal part of the hybrid
+functional. Non-self-consistent hybrid functional calculations21,62
+were performed on top of PBEsol with Hubbard U corrections to
+localized orbitals63 to simultaneously attain low computational cost
+and high accuracy. This approach is particularly advantageous in the
+high-throughput evaluation of IPs and EAs as it allows for the direct
+alignment of the bulk hybrid functional eigenvalues with the vacuum
+levels in surface supercells obtained using PBEsol(+U) through the
+common electrostatic reference levels.21 For the reference level
+ref
+bulk,
+we used the averaged local potentials at the oxygen sites.
+PBEsol(+U) was used for obtaining optimized structures, static
+dielectric constants, and wave functions for the non-self-consistent
+dielectric-dependent hybrid functional calculations. The means of the
+diagonal elements of the ion-clamped static dielectric tensors obtained
+using the random phase approximation were taken to determine the
+values of the nonlocal exchange mixing parameter for respective
+systems.
+Computational Procedures for Surfaces. We focus on high-
+throughput calculations of nonpolar surfaces in this study because
+specific treatments are necessary for modeling polar surfaces as
+mentioned above. We prepared slab models for nonpolar surfaces of
+Tasker’s types I and II64 for the binary and ternary oxides. Their
+maximum Miller indices were set to be those listed in Table S3 for
+binary oxides and 2 for ternary oxides. Each slab model has a slab
+layer thicker than 20 Å and a vacuum layer thicker than 15 Å, which
+are large enough for the electrostatic potential to converge
+sufficiently.21 The convergence test results of IPs, EAs, and surface
+energies with respect to the vacuum and slab layer thicknesses are
+shown for selected systems in Figure S6. The slab models were
+automatically created using the code developed in ref 52. The surfaces
+were structurally relaxed with their lattice constants fixed by using
+PBEsol(+U).
+vac
+surface was estimated as the electrostatic potential at the
+midpoint of the vacuum layer, and
+ref
+surface,far was taken to be the
+average of the local potentials of the oxygen sites around the midpoint
+of the slab layer.
+Computational Details. The PAW data set used in the
+calculations is detailed in Table S4. The plane-wave cutoff energy
+was set to 520 eV for the bulk structure optimization, including lattice
+parameter relaxation, and 400 eV for the other calculations with the
+lattice parameters fixed. The k-point mesh spacings for structure
+optimization were set to be smaller than 0.2 Å−1 and reduced to be
+less than 0.1 Å−1 in the calculations of the ion-clamped static
+dielectric tensors. The band path for estimating the VBM and CBM of
+each bulk system was generated using SeeK-path.65,66 Hubbard U
+corrections were applied to localized orbitals by using the parameters
+listed in Table S4.
+Machine Learning: SOAP Descriptors. For input descriptors to
+describe surface atomic configurations, we employed SOAPs, which
+are often used to construct machine learning potentials and analyze
+complicated systems.67,68 In SOAPs, the positions of atoms labeled
+with Z (usually atomic species) are smeared with three-dimensional
+Gaussian functions as
+r
+e
+( )
+r
+R
+Z
+i
+Z
+1
 2
-Add descendants
-Dataset of final solution
-4
-5
-N
+i
+2
+=
+| |
+|
+|
+(4)
+where Ri is the position of the i-th atom surrounding r. |Z| is the
+number of atoms labeled Z within the cutoff radius and σ is a standard
+deviation of the Gaussian function. The summation of the smeared
+atom positions is then expanded by linear combinations of radial basis
+functions with a cutoff radius and spherical harmonics considering the
+local point of interest. The coefficients are defined as
+r
+r
+c
+Vg
 Y
-Fig. 2 Data collection and process. a The landscape of all VRHE data produced by experiments, including eighteen conventional and ﬁve new perovskites
-(totally twenty-three perovskites listed as ‘Materials index’ with sequence shown in Table 1). Each perovskite has been made four samples and each sample
-has been measured three times (totally twelve measurements listed as ‘No. of measurements’). For each measurement, we adopted VRHE values at ﬁve
-current densities of 50 µA cm−2, 5 mA cm−2, 10 mA cm−2, 15 mA cm−2, and 20 mA cm−2. The exact values of those data points are provided in
-Supplementary Data 1–5. b The ﬂowchart of symbolic regression based on genetic programming (see more details of this ﬂowchart and SR in
-Supplementary Information).
-NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-020-17263-9
-ARTICLE
-NATURE COMMUNICATIONS |   (2020) 11:3513 | https://doi.org/10.1038/s41467-020-17263-9 | www.nature.com/naturecommunications
+d
+( )
+( ,
+)
+( )
+nlm
+Z
+n
+lm
+Z
 3
-Table 1 Key materials parameters of 23 selected oxide perovskites.
-No.
-Materials
-t
-μ
-RA(Å)
-χA
-χB
-QA
-Nd
-μ/t
-Conventional Perovskites
-1
-LaMnO3
-0.993
-0.430
-1.36
-1.1
-1.55
-3
-4
-0.433
-2
-LaMn0.5Ni0.5O3
-0.998
-0.422
-1.36
-1.1
-1.73
-3
-5.5
-0.423
-3
-LaNiO3
-1.003
-0.415
-1.36
-1.1
-1.91
-3
-7
-0.413
-4
-LaMn0.5Cu0.5O3
-0.988
-0.437
-1.36
-1.1
-1.725
-3
-6
-0.442
-5
-LaNi0.9Fe0.1O3
-1.004
-0.414
-1.36
-1.1
-1.902
-3
-6.8
-0.413
-6
-LaNi0.8Fe0.2O3
-1.004
-0.413
-1.36
-1.1
-1.894
-3
-6.6
-0.412
-7
-LaFeO3
-1.009
-0.407
-1.36
-1.1
-1.83
-3
-5
-0.404
-8
-La0.5Pr0.5FeO3
-1.010
-0.407
-1.365
-1.115
-1.83
-3
-5
-0.403
-9
-PrFeO3
-1.012
-0.407
-1.37
-1.13
-1.83
-3
-5
-0.402
-10
-LaCoO3
-1.011
-0.404
-1.36
-1.1
-1.88
-3
-6
-0.399
-11
-La0.5Ca0.5CoO3
-1.011
-0.398
-1.35
-1.05
-1.88
-2.5
-5.5
-0.394
-12
-La0.8Sr0.2CoO3
-1.019
-0.401
-1.376
-1.07
-1.88
-2.8
-5.8
-0.394
-13
-Sr0.25La0.75Fe0.5Co0.5O3
-1.020
-0.401
-1.38
-1.063
-1.855
-2.75
-5.25
-0.393
-14
-La0.4Sr0.6CoO3
-1.034
-0.397
-1.408
-1.01
-1.88
-2.4
-5.4
-0.384
-15
-La0.2Sr0.8CoO3
-1.042
-0.395
-1.424
-0.98
-1.88
-2.2
-5.2
-0.379
-16
-SrCoO3
-1.049
-0.393
-1.44
-0.95
-1.88
-2
-5
-0.374
-17
-Ba0.5Sr0.5Co0.8Fe0.2O3
-1.082
-0.391
-1.525
-0.92
-1.876
-2
-4.8
-0.361
-18
-BaFeO3
-1.119
-0.385
-1.61
-0.89
-1.83
-2
-4
-0.344
-New Perovskites
-19
-Cs0.25La0.75Mn0.5Ni0.5O3
-1.064
-0.398
-1.49
-1.023
-1.73
-2.5
-5
-0.374
-20
-Cs0.4La0.6Mn0.25Co0.75O3
-1.095
-0.395
-1.568
-0.976
-1.798
-2.2
-4.7
-0.361
-21
-Cs0.3La0.7NiO3
-1.088
-0.379
-1.516
-1.007
-1.91
-2.4
-6.4
-0.348
-22
-SrNi0.75Co0.25O3
-1.071
-0.365
-1.44
-0.95
-1.903
-2
-5.75
-0.341
-23
-Sr0.25Ba0.75NiO3
-1.127
-0.356
-1.568
-0.905
-1.91
-2
-6
-0.315
-The key materials parameters include the tolerance factor (t), octahedral factor (μ), ionic radii of A-site (RA) and B-site (RB), electronegativity of A-site (χA) and B-site (χB), valence state of A-site (QA),
-and number of d electrons on TM B-site (Nd). The materials are ordered by the value of μ/t in each dataset of conventional and new perovskites.(See Supplementary Table 7 for calculation details.).
-33
-a
+=
+| |
+(5)
+where gn and Ylm are radial basis functions and spherical harmonics,
+respectively. The former generally depends on location r from the
+center and the latter on polar angle θ and azimuth ϕ in the polar
+coordinates around the center. n is the degree of the radial basis
+function; l and m are the degree and order of the spherical harmonics,
+respectively. The partial power spectrum vector is defined as
+p
+l
 c
-d
-b
-1.55
-1.60
-1.65
-1.70
-1.75
-1.80
-0.45
-1
-4
-2
-3
-12
-8
-6
-5
-7
-9
-13
-14
-15
-16
-18
-17
-19
-20
-21
-22
-23
-10
-11
-0.40
- / t
- / t
-0.35
-0.30
-32
-31
-30
-29
-28
-27
-A
-B
-C
-D
-E
-F
-G
-H
-I
-26
-MAE (meV)
-E (V vs. RHE)
-E (V vs. RHE)
-25
-24
-23
-22
-21
-20
-1.45
-Ba0.5Sr0.5Co0.8Fe0.2O3
-Ba0.5Sr0.5Co0.8Fe0.2O3
-La0.5Ca0.5CoO3
-La0.5Ca0.5CoO3
-La0.5Ca0.5MnO3
-La0.5Ca0.5MnO3
-La0.75Ca0.25FeO3
-La0.75Ca0.25FeO3
-La0.5Ca0.5FeO3
-La0.5Ca0.5FeO3
-LaFeO3
-LaFeO3
-LaMn0.5Cu0.5O3
-LaMn0.5Cu0.5O3
-LaCrO3
-LaCrO3
-LaNiO3
-LaNiO3
-LaCoO3
-LaCoO3
-LaMnO3
-LaMnO3
-LaMn0.5Ni0.5O3
-LaMn0.5Ni0.5O3
-1.50
-1.55
-1.60
-1.65
-1.70
-1.75
-1.80
-E (V vs. RHE)
-1.45
-1.50
-1.55
-1.60
-1.65
-1.70
-1.75
-1.80
-0.0
-0.5
-1.0
-eg electron
-1.5
-2.0
-2.5
-0.50
-0.45
-0.40
-0.35
-0.30
-1 2 3 4 5 6 7
-Complexity
-8 9 10 11 12 13 14
-Fig. 3 Descriptor generation and performance. a Pareto front of MAE vs. complexity of 8640 mathematical formulas shown via density plot. b VRHE vs. μ/t
-(black diamonds: conventional perovskites; red dots: new perovskites). The current densities are normalised by BET surface areas (Supplementary Table 2)
-and loading amount. c Figure 2 from the study of Suntiviich et al.9 reproduced with permission from the American Association for the Advancement of
-Science. d Reformatted plot according to descriptor μ/t of c. The MAE (Pearson correlation coefﬁcient) for c, d were 20.6 meV (0.923) and 21.0 meV
-(0.928), respectively.(The error bar in b is produced by the maximum and minimum values in experiments data).
-ARTICLE
-NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-020-17263-9
-4
-NATURE COMMUNICATIONS |   (2020) 11:3513 | https://doi.org/10.1038/s41467-020-17263-9 | www.nature.com/naturecommunications
-used a rational strategy to accelerate the screening process:
-adopting large cations on the A site (increasing t) and small
-cations on the B site (decreasing μ). Previously, the commonly
-used A-site cations in oxide perovskite catalysts are group IIA
-(Ca, Sr, Ba) and group IIIB (La, Ce, Pr) elements13. Based on the
-insight of the new descriptor developed here, we considered
-incorporating large group-IA elements (K, Rb, Cs) onto the A site
-to increase t. Among the TM ions that can form perovskite
-oxides, 3d TM ions have the smallest ionic radii, which is
-consistent with the fact that all existing active oxide perovskite
-catalysts contain Mn, Fe, Co, and Ni cations (the smallest among
-the 3d TM ions) on the B site. 4d/5d TM oxide perovskites are
-catalytically
-less
-active,
-despite
-having
-similar
-d
-electron
-conﬁgurations. Therefore, we considered that the A site contains
-up to two ions from (K1+, Rb1+, Cs1+, Ca2+, Sr2+, Ba2+, La3+,
-Ce3+, Pr3+) and the B site contains up to eight ions from (Mn3+,
-Mn4+, Fe3+, Fe4+, Co3+, Co4+, Ni3+, Ni4+) with variation in an
-increment of 0.25 for the A and B ionic ratio. Note that the
-actual
-stoichiometric
-ratios
-depend
-on
-the
-synthesis
-conditions and the formability of the target perovskites. Subject
-to the requirement of charge balance, 3,545 oxide perovskites
-were obtained and their μ/t values were calculated. These oxide
-perovskites are listed in Supplementary Data 6 in order of
-increasing μ/t value. There are many new oxide perovskites with
-μ/t values smaller than those of materials reported in the
-literature, revealing a new and large group of previously
-unexplored OER catalysts.
-Screening, synthesis and characterisation of new oxide per-
-ovskite catalysts. The formability and stabilities of 3545 oxide
-perovskites have not been veriﬁed. Therefore, we selected thirteen
-new oxide perovskites in the smallest μ/t values (the topmost
-region in Supplementary Data 6) with an increment of ~0.015 in
-μ/t values to consider sufﬁcient elemental and compositional
-diversity
-for
-experimental
-veriﬁcation.
-These
-thirteen
-perovskite oxides are: Ba0.75 Sr0.25NiO3, Cs0.4La0.6Mn0.25Co0.75O3,
-SrNi0.75Co0.25O3,
-Cs0.3La0.7NiO3,
-Cs0.25La0.75Mn0.5Ni0.5O3,
-Cs0.5La0.5Mn0.5Ni0.5O3,
-Sr0.25La0.75Mn0.5Fe0.5O3,
-Ba0.75Pr0.25-
-Ni0.5Fe0.5O3,
-Cs0.6La0.4Mn0.75Co0.25O3,
-Cs0.5La0.5MnO3,
-Cs0.5La0.5Mn0.25Co0.75O3,
-Cs0.5La0.5Mn0.5Co0.5O3,
-and
-Cs0.25Pr0.75Mn0.25Fe0.25Co0.25Ni0.25O3. The synthesis method is
-described in detail in the Methods section. We found that eight of
-them
-contained
-signiﬁcant
-amounts
-of
-impurity
-or
-secondary phases, as indicated by the asterisks in the powder
-X-ray diffraction (PXRD) patterns (Supplementary Fig. 6).
-For example, Cs0.5La0.5Mn0.5Ni0.5O3, Cs0.6La0.4Mn0.75Co0.25O3,
-Cs0.5La0.5MnO3, Cs0.5La0.5Mn0.25Co0.75O3, and Cs0.5La0.5Mn0.5-
-Co0.5O3 showed an impurity phase of MnO4+δ (main diffraction
-peaks at 12° and 24°). Ba0.75Pr0.25Ni0.5Fe0.5O3 contained Pr2O3
-and
-NiO
-impurity
-phases.
-Five
-compounds
-including
-Cs0.4La0.6Mn0.25Co0.75O3,
-Cs0.3La0.7NiO3,
-Cs0.25La0.75Mn0.5-
-Ni0.5O3, Sr0.25Ba0.75NiO3, and SrNi0.75Co0.25O3, formed pure
-perovskite phases, as by conﬁrmed PXRD (Supplementary Fig. 6).
-The OER activities of these ﬁve new pure oxide perovskites were
-then
-characterised
-(Fig.
-4a–c).
-Cs0.4La0.6Mn0.25Co0.75O3,
-Cs0.3La0.7NiO3, SrNi0.75Co0.25O3, and Sr0.25Ba0.75NiO3 showed
-lower VRHE values (higher OER activity) than BSCF did. The
-speciﬁc activities are also compared with the state-of-the-art
-perovskite oxide catalysts20. We found that our materials are
-among the oxide perovskite catalysts with the highest speciﬁc
-activities10 (Supplementary Fig. 7). Remarkably, the experimental
-VRHE values of these new oxide perovskite catalysts follow the
-same trend of SR-derived descriptor, μ/t, as shown in Fig. 3b. To
-further verify the descriptor, the SR procedure is repeated with
-the inclusion of ﬁve new predicted perovskites. Most of derived
-mathematical formulas that had been residing near the Pareto
-front (Fig. 3a), including μ/t, remain (Supplementary Fig. 8 and
-Supplementary Table 3); this persistence shows that the addition
-of more training examples does not generate a signiﬁcant
-alteration in the model’s response, indicating that the model
-remained predictive with these new perovskites. It is worth noting
-that we have selected a very limited number of compositions for
-experimental synthesis and characterisation because of limited
-resources. It is highly anticipated that more of these predicted
-oxide perovskite catalysts with high OER activities can be
-experimentally synthesised and their OER activities will be
-veriﬁed.
-The stability of the four new oxide perovskite catalysts with
-OER activities higher than previously reported oxide perovskite
-catalysts were tested galvanostatically at 10 mA·cm−2 disk current
-(Fig. 4d). We selected a higher disk current density for stability
-testing to verify the activity decay under strong polarisation
-conditions. Cs0.4La0.6Mn0.25Co0.75O3, Cs0.3La0.7NiO3, SrNi0.75-
-Co0.25O3, and Sr0.25Ba0.75NiO3 showed lower activity degradation
-than BSCF. In particular, the Sr0.25Ba0.75NiO3 electrode main-
-tained a stable VRHE over 12 h of stability testing without
-signiﬁcant decay. Under the same conditions, the BSCF sample
-showed a much faster degradation rate, with only 90% retention
-after 9 h. After OER durability tests, the Sr0.25Ba0.75NiO3 electrode
-maintained its original morphology. Scanning transmission
-electron microscopy (STEM) and high-resolution transmission
-electron microscopy images revealed no signiﬁcant surface
-amorphization. The surfaces of the Sr0.25Ba0.75NiO3 particles
-maintained good crystallinity after stability tests, as conﬁrmed by
-clear observation of the same lattice spacings (Fig. 5) and
-elemental analysis (Supplementary Table 4). Recent work has
-shown that increasing the valence states of 3d-TMs such as Ni
-and Co from 2+/3+ to 3+/4+ can boost the OER activities
-of LaCoO3 and LaNiO333. Interestingly, apart from increasing
-t, Cs1+ substitution on the A site is a viable route to enhance the
-valence states of TM B-site ions in oxide perovskites. This
-correlates with the SR-derived descriptor, μ/t, since increasing the
-valence states inevitably reduces the ionic radii of TMs, which in
-turn reduces the μ value, and, therefore, reduces μ/t. Meanwhile,
-recent theoretical reports predicted that SrNiO3 should have high
-OER activity34. Unfortunately, the hexagonal close packing of Sr
-and O atoms prevents the formation of the perovskite structure.
-To mitigate this issue, La was proposed to partially substitute Sr.
-However, partial La substitution leads to the formation of a
-Ruddlesden–Popper
-crystal
-structure
-instead
-of
-perovskite
-structures31. Interestingly, the descriptor μ/t suggests that partial
-substitution of Sr using larger Ba atoms can enhance catalytic
-Table 2 The nine mathematical formulas at the Pareto front
-in Fig. 3a.
-Point
-Formulas
-MAE (eV)
-Complexity
-A
-1:751
-t
-0.0286
-1
-B
-1:992μ
-0:276
-
-0:5
-0.0279
-2
-C
-1:554 μ
-t þ 1:092
-0.0253
-3
-D
-t þ 0:289 þ Q0:5
-A
-
-0:5
-0.0252
-5
-E
-1:282 þ Q0:5
-A
-
-0:50:5
-þ μ
-0.0244
-6
-F
-Q0:5
-A
-χB þ 1:034 þ χ0:5
-A
-
-0:5
-0.0232
-8
-G
-QA
-t
-0:5
-χB
-þ 1:034 þ χ0:5
-A
-
-0:5
-0.0225
-10
-H
-Q0:5
-A
-χB þ 1:034 þ ðQAμÞ0:50:5
-
-0:5
-0.0224
-11
-I
-Q0:5
-A
-χB þ 1 þ 0:34μ þ
-μ
-t
- 0:5
-
-0:5
-0.0220
-12
-NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-020-17263-9
-ARTICLE
-NATURE COMMUNICATIONS |   (2020) 11:3513 | https://doi.org/10.1038/s41467-020-17263-9 | www.nature.com/naturecommunications
-5
-activity. Our experiments showed that Ba0.75Sr0.25NiO3 can be
-synthesised with the perovskite structure and its OER activity is
-even higher than BSCF (Fig. 5), demonstrating the usefulness of
-the SR-derived descriptor.
-Discussion
-Those results show that even with a small dataset, the SR
-analysis could provide simple and meaningful descriptors that
-enabled us to discover new oxide OER catalysts with improved
-activities, which is consistent with successful application of
-small data in materials design by adaptive ML4,5. The descriptor
-of μ/t implies that the catalytic activity of oxide perovskites is
-closely related to their structural stability, i.e. a lower stability
-leads to a high activity. Feature analysis in SR process shows
-that μ, t, and QA correlate with the catalytic activity more than
-RA, Nd, χA, and χB (Supplementary Fig. 9). Considering the t
-and μ are functions of rA and rB, we also trained SR model
-based on the parameters of rA, rB, Nd, χA, χB, QA without t, μ.
-The results are shown in Supplementary Fig. 13 and Supple-
-mentary Table 5. However, the MAE of descriptors at the same
-complexity on
-Pareto front are
-mostly larger
-than
-the
-descriptors discovered based on μ, t, rA, Nd, χA, χB, QA. The
-oxide perovskites showing improved OER activity had t > 1
-(Table 1 and also Table 6 in ref. 13), which were considered
-unstable perovskites35. However, we found that these per-
-ovskites could be synthesised under suitable conditions. Nota-
-bly,, we exhaustively searched Inorganic Crystal Structure
-Database(ICSD) and found that the existing oxide perovskites
-mostly have t < 0.95 and µ > 0.55 (Supplementary Fig. 14).
-However, oxide perovskites reported to be catalyst in the last
-forty years lie in a small conﬁned range (t > 0.95 and µ < 0.55).
-According to the descriptor of μ/t, most of oxide perovskites are
-less catalytically active, which seems consistent with existing
-experimental results that oxide perovskite catalysts are limited
-in a few types of perovskites10. More in-depth understanding of
-correlation among μ/t, catalysis activity and structural stability
-is out of scope of current research but deserves further study.
-In summary, we used SR to identify a simple descriptor for
-describing the OER activity of oxide perovskite catalysts. This
-simple descriptor quantitatively predicted the OER activity of
-oxide perovskites and enabled us to rapidly discover a series of
-new oxide perovskite catalysts with improved OER activities. For
-proof of concept, we successfully synthesised ﬁve oxide per-
-ovskites and four of them exhibited OER activities surpassing
-those of existing oxide perovskite catalysts reported in the lit-
-erature. We anticipate that more of the predicted new oxide
-perovskite catalysts can be synthesised and their OER activities
-veriﬁed. Our results demonstrate that SR is a powerful ML
-technique to discover physically meaningful descriptors when
-sufﬁcient comparable data is available. This work suggests a new
-direction for discovering functional materials with improved
-activities.
-Methods
-Symbolic regression. Symbolic regression analysis using a genetic algorithm was
-performed using gplearn29, a Python library that extends scikit-learn, a machine
-learning tool, for symbolic regression. The hyper-parameters setup for gplearn is
-listed in Table 3. The explanation of each hyper-parameter in Table 3 are following:
-The meanings of genetic operations of pc, ps, ph, and pp above can be found in
-Supplementary Fig. 10. The grid search method was used for pc, ps, and parsimony
-coefﬁcient. As shown in the Table 3, there are 18 pc values from 0.5 to 0.95 with
-step of 0.025, 8 ps values and 3 parsimony coefﬁcients. Therefore, a grid search
-contains 18 × 8 × 3 = 432 hyper-parameters. More information about SR can be
-found in the Supplementary Information.
-Experimental synthesis of oxide perovskites. The oxide perovskites were syn-
-thesised using a modiﬁed Pechini method following by thermal calcination at
-850–1000 °C under dry air/oxygen atmospheres. Brieﬂy, the acetate or nitrate
-precursors of the perovskite oxides (4 mmol) were mixed in methanol/H2O (10 mL,
-2:1 v:v), and citric acid (10 mmol) was added to obtain a clear sol. The mixture
-was dried at 120 °C and the remaining solid was calcinated at 500 °C for 1 h
-in air. Then, the obtained powder was ground into ﬁne powder and pressed
-into pellets with a diameter of 15 mm using a hydraulic press at 20 MPa. Finally,
-a
 c
-b
-d
-25
-E (H2O/O2)
-Ba0.5Sr0.5Co0.8Fe0.2O3-5
-Ba0.5Sr0.5Co0.8Fe0.2O3-5
-Ba0.75Sr0.25NiO3-5
-Ba0.5Sr0.5Co0.8Fe0.2O3-5
-Ba0.5Sr0.5Co0.8Fe0.2O3-5
-Cs0.4La0.6Mn0.25Co0.75O3
-Cs0.4La0.6Mn0.25Co0.75O3
-Cs0.4La0.6Mn0.25Co0.75O3
-Cs0.4La0.6Mn0.25Co0.75O3
-SrNi0.75Co0.25O3
-SrNi0.75Co0.25O3
-Sr0.25Ba0.75NiO3-5
-SrNi0.75Co0.25O3
-SrNi0.75Co0.25O3
-Cs0.3La0.7NiO3
-Cs0.3La0.7NiO3
-125 mV dec
-–1
-106 mV dec
-–1
-120 mV dec
-–1
-101 mV dec
-–1
-136 mV dec
-–1
-Cs0.3La0.7NiO3
-Cs0.3La0.7NiO3
-Sr0.25Ba0.75NiO3-5
-Sr0.25Ba0.75NiO3-5
-20
-15
-10
-i (mA cm–2
-disk)
-i (mA cm–2
-disk)
-5
-0
-120
-1.85
-1.45
-0.1
-1
-10
-1.50
-E-iR (V vs. RHE)
-1.55
-1.60
-1.65
-1.70
-1.79
-1.73
-1.67
-1.61
-1.55
-100
-@1.65 VRHE
-@10 mA cm–2
-disk
-80
-60
-40
-Mass activity (A g–1
-oxide)
-Specific activity (mA cm–2
-oxide)
-20
-0
-100
-80
-60
-40
-20
-0
-0
-3
-6
-Time (h)
-9
-12
-Samples
-1.2
-1.4
-1.6
-E-iR (V vs. RHE)
-E-iR (V vs. RHE)
-1.8
-2.0
-Fig. 4 OER characterisations of Ba0.5Sr0.5Co0.8Fe0.2O3 and predicted new oxide perovskites. a LSV curves. b Corresponding Tafel slopes. c Mass and
-speciﬁc activities. d Results of stability tests under galvanostatic conditions at 10 mA cm−2 disk current density.
-ARTICLE
-NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-020-17263-9
-6
-NATURE COMMUNICATIONS |   (2020) 11:3513 | https://doi.org/10.1038/s41467-020-17263-9 | www.nature.com/naturecommunications
-the pellets were calcinated at 850–1000 °C for 6 h under dry air/oxygen
-atmospheres.
-Crystal structure characterisation. The structure and phase of the synthesised
-materials were examined by PXRD (Ultima III, Rigaku, Japan) and Raman spec-
-troscopy (Bruker FT Raman Spectrometer with a laser wavelength of 532 nm). The
-morphology of the ﬁlms was characterised using transmission electron microscopy
-(TEM; JEOL 3011, Japan), scanning transmission electron microscopy (STEM;
-Hitachi HD-2300A, Japan), and high-resolution TEM (HRTEM; Hitachi HD-
-3010A, Japan). Elemental compositions were determined using energy-dispersive
-X-ray spectroscopy (EDS; Oxford Instruments, UK) and inductively coupled
-plasma mass spectrometry (ICP-MS; Thermo Scientiﬁc XSeries 2 ICPMS, USA).
-The catalyst surface area was determined using Brunauer–Emmet–Teller (BET)
-analysis, using a BELSORP-mini II (BEL. Japan Inc.) under a ﬂow of N2 gas.
-OER characterisation. OER characterisation was performed on a glassy carbon
-rotating disk electrode. First, 2 mg of catalyst was dissolved in 2 mL ethanol and
-100 μL Naﬁon solution was added. Then, the mixture was sonicated for 30 min to
-form a homogenous mixture. Subsequently, 90 μL of the slurry was loaded onto the
-surface of a glassy carbon electrode (GCE; 0.196 cm2) and the electrode was dried
-at room temperature. The electrolyte was puriﬁed to remove trace Fe using Ni
-(OH)2 powder. The OER measurements were performed using a Voltalab PGZ-301
-potentiostat/galvanostat (Radiometer Analytical, France), with a Pt foil and a Ag/
-AgCl electrode used as the counter and reference electrodes, respectively. The
-loading amount of the catalysts was 0.168 mg cm−2. All potentials were plotted
-versus the reversible hydrogen electrode (RHE) as E(RHE) = E(Ag/AgCl) + 0.197 +
-0.0591 × pH. All linear sweep voltammetry measurements were performed at a
-scan rate of 5 mV s−1. All OER measurements were iR-compensated (98%). Each
-measurement was conducted three times under the same conditions. The error
-bars denote variations observed from sample synthesis and OER measurements.
-The stability test was performed using the controlled current electrolysis method.
-PXRD measurements veriﬁed that all the obtained materials had the perovskite
-structure.
-To evaluate the intrinsic activities, the current densities were normalised by the
-loading amount and the BET surface areas in order to exclude the increase in
-current as a result of high loading content and higher surface area.
-Normalisation was performed according to the expression: i (mA cm−2 oxide
-current) = i (mA cm−2 disk current) ÷ (loading amount (g cm−2) × BET surface
-area (cm2 g−1)). Here, i (mA cm−2 oxide current) was denoted as the normalised
-speciﬁc activity, while i (mA g−1 oxide current) = i (mA cm−2 disk current) ÷
-(loading amount (g cm−2)) refers to the mass activity.
-Data availability
-The data of measured VRHE values for all oxide perovskites and 3545 potential oxide
-perovskites listed by the amount of μ/t are provided online.
-Received: 26 February 2020; Accepted: 16 June 2020;
-References
-1.
-Wang, Y., Wagner, N. & Rondinelli, J. M. Symbolic regression in materials
-science. MRS Commun. 9, 793–805 (2019).
-2.
-Schmidt, M. & Lipson, H. Distilling free-form natural laws from experimental
-data. Science 324, 81–85 (2009).
-3.
-Lu, S. et al. Accelerated discovery of stable lead-free hybrid organic-inorganic
-perovskites via machine learning. Nat. Commun. 9, 3405 (2018).
-4.
-Xue, D. et al. Accelerated search for materials with targeted properties by
-adaptive design. Nat. Commun. 7, 11241 (2016).
-5.
-Xue, D. et al. Accelerated search for BaTiO3-based piezoelectrics with vertical
-morphotropic phase boundary using Bayesian learning. Proc. Natl Acad. Sci.
-USA 113, 13301–13306 (2016).
-6.
-Schmidt, J., Marques, M. R. G., Botti, S. & Marques, M. A. L. Recent advances
-and applications of machine learning in solid-state materials science. npj
-Comput. Mater. 5, 83 (2019).
-7.
-Vellido, A., Martín-Guerrero, J. D. & Lisboa, P. J. G. Making machine learning
-models interpretable. in Proc. ESANN 2012, 20th European Symposium on
-Artiﬁcial Neural Networks, Computational Intelligence and Machine Learning,
-Vol. 12, 163–172 (2012).
-8.
-Ouyang, R., Curtarolo, S., Ahmetcik, E., Schefﬂer, M. & Ghiringhelli, L. M.
-SISSO: A compressed-sensing method for identifying the best low-
-dimensional descriptor in an immensity of offered candidates. Phys. Rev.
-Mater. 2, 83802 (2018).
-Table 3 The setup of hyper-parameters in gplearn for GPSR.
-Parameter
-Value
-population size
-5000
-Generations
-20
-stopping criteria
-0.01 (eV)
-pc
-0.5, 0.95 (step = 0.025)
-ps
-(1-pc)/3, (0.92-pc)/3 (step = 0.01)
-ph
-ps
-pp
-1-pc-ps-ph
-function set
-add, sub, mul, div, sqrt
-parsimony coefﬁcient
-0.0005, 0.0015 (step = 0.0005)
-tournament size
-20
-metric
-mean absolute error (MAE)
-constant range
-(−1,1)
-The explanation of each hyperparameter are as follows: population size the number of
-mathematical formulas in each generation, generations the max number of generations, stopping
-criteria MAE value that the program stops, pc crossover probability, ps subtree mutation
-probability, ph hoist mutation probability, pp point mutation probability, function set basic
-building blocks containing mathematical operators, parsimony coefﬁcient a constant that
-penalizes large individuals by adjusting their MAE to make them less favorable for selection,
-tournament size the number of individuals in each tournament, metric measures how well an
-individual ﬁts, constant range the range of constants included in mathematical formula.
-b
-a
-5 nm
-5 nm
-TEM
-Overlays
-Ba
-Sr
-Ni
-O
-TEM
-Overlays
-Ba
-Sr
-Ni
-O
-Fig. 5 Morphology measurements of Ba0.75Sr0.25NiO3 before and after
-OER testing. a HRTEM before a stability test. b HRTEM after a stability
-test. Right side: STEM atomic mapping (scale bar: 500 nm). The labelled
-lattice spacing is around 0.3 nm, which corresponded to the (110) lattice
-planes of Ba0.75Sr0.25NiO3, in good agreement with the PXRD
-measurements. The insets of a, b show the fast Fourier transform image of
-the corresponding HRTEM image. The well-regulated arrayed spots
-indicated that the grown crystal had high crystallinity. HRTEM of
-Ba0.75Sr0.25NiO3 before and after OER testing clearly showed the same
-lattice spacing and very similar fast Fourier transform images, suggesting
-outstanding stability of the Ba0.75Sr0.25NiO3 sample under OER conditions.
-The maintenance of good crystallinity indicates that Ba0.75Sr0.25NiO3 is a
-stable OER electrocatalyst. In order to verify the atomic distribution, STEM
-mapping was conducted; the even distribution of the atoms over the
-analyzed area further demonstrates the excellent stability of the sample.
-NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-020-17263-9
-ARTICLE
-NATURE COMMUNICATIONS |   (2020) 11:3513 | https://doi.org/10.1038/s41467-020-17263-9 | www.nature.com/naturecommunications
-7
-9.
-Suntivich, J., May, K. J., Gasteiger, H. A., Goodenough, J. B. & Shao-Horn, Y.
-A perovskite oxide optimized for oxygen evolution catalysis from molecular
-orbital principles. Science 334, 1383–1385 (2011).
-10. Wei, C. et al. Recommended practices and benchmark activity for hydrogen
-and oxygen electrocatalysis in water splitting and fuel cells. Adv. Mater. 31,
-1806296 (2019).
-11. Vojvodic, A. & Nørskov, J. K. Chemistry: optimizing perovskites for the water-
-splitting reaction. Science 334, 1355–1356 (2011).
-12. She, Z. W. et al. Combining theory and experiment in electrocatalysis: Insights
-into materials design. Science 355, eaad4998 (2017).
-13. Yin, W. J. et al. Oxide perovskites, double perovskites and derivatives for
-electrocatalysis, photocatalysis, and photovoltaics. Energy Environ. Sci. 12,
-442–462 (2019).
-14. Bradley, K., Giagloglou, K., Hayden, B. E., Jungius, H. & Vian, C. Reversible
-perovskite electrocatalysts for oxygen reduction/oxygen evolution. Chem. Sci.
-10, 4609–4617 (2019).
-15. Retuerto, M. et al. La1.5Sr0.5NiMn0.5Ru0.5O6 double perovskite with enhanced
-ORR/OER bifunctional catalytic activity. ACS Appl. Mater. Interfaces 11,
-21454–21464 (2019).
-16. Bockris, J. O. The Electrocatalysis of oxygen evolution on perovskites. J.
-Electrochem. Soc. 131, 290 (1984).
-17. Man, I. C. et al. Universality in oxygen evolution electrocatalysis on oxide
-surfaces. ChemCatChem 3, 1159–1165 (2011).
-18. Hwang, J. et al. Perovskites in catalysis and electrocatalysis. Science 358,
-751–756 (2017).
-19. Jacobs, R., Hwang, J., Shao-Horn, Y. & Morgan, D. Assessing correlations of
-perovskite catalytic performance with electronic structure descriptors. Chem.
-Mater. 31, 785–797 (2019).
-20. Haverkort, M. W. et al. Spin state transition in LaCoO3 studied using soft X-
-ray absorption spectroscopy and magnetic circular dichroism. Phys. Rev. Lett.
-97, 38–41 (2006).
-21. Ghiringhelli, L. M., Vybiral, J., Levchenko, S. V., Draxl, C. & Schefﬂer, M. Big
-data of materials science: critical role of the descriptor. Phys. Rev. Lett. 114,
-105503 (2015).
-22. Vladislavleva, E. Model-based problem solving through symbolic regression
-via pareto genetic programming. 169–172 (CentER, Center for Economic
-Research, 2008).
-23. Bartel, C. J. et al. New tolerance factor to predict the stability of perovskite
-oxides and halides. Sci. Adv. 5, eaav0693 (2019).
-24. Meadowcroft, D. B. Low-cost oxygen electrode material. Nature 226, 847–848
-(1970).
-25. Hong, W. T., Welsch, R. E. & Shao-Horn, Y. Descriptors of oxygen-
-evolution activity for oxides: a statistical evaluation. J. Phys. Chem. C. 120,
-78–86 (2016).
-26. Davies, D. W., Butler, K. T. & Walsh, A. Data-driven discovery of photoactive
-quaternary oxides using ﬁrst-principles machine learning. Chem. Mater. 31,
-7221–7230 (2019).
-27. Lu, S. et al. Accelerated discovery of stable lead-free hybrid organic-inorganic
-perovskites via machine learning. Nat. Commun. 9, 3405 (2018).
-28. Li, Z., Xu, Q., Sun, Q., Hou, Z. & Yin, W. J. Thermodynamic stability
-landscape of halide double perovskites via high-throughput computing and
-machine learning. Adv. Funct. Mater. 29, 1807280 (2019).
-29. Stephens, T. gplearn. https://gplearn.readthedocs.io/en/latest/intro.html.
-30. Petrie, J. R. et al. Enhanced bifunctional oxygen catalysis in strained LaNiO3
-perovskites. J. Am. Chem. Soc. 138, 2488–2491 (2016).
-31. Forslund, R. P. et al. Exceptional electrocatalytic oxygen evolution via tunable
-charge transfer interactions in La0.5Sr1.5Ni1−xFexO4±δ Ruddlesden-Popper
-oxides. Nat. Commun. 9, 3150 (2018).
-32. Hona, R. K. & Ramezanipour, F. Remarkable oxygen-evolution activity of a
-perovskite oxide from the Ca2−xSrxFe2O6−δ series. Angew. Chem. 131,
-2082–2085 (2019).
-33. Weng, B. et al. A layered Na1-xNiyFe1-yO2 double oxide oxygen evolution
-reaction electrocatalyst for highly efﬁcient water-splitting. Energy Environ. Sci.
-10, 121–128 (2017).
-34. Rong, X., Parolin, J. & Kolpak, A. M. A fundamental relationship between
-reaction mechanism and stability in metal oxide catalysts for oxygen
-evolution. ACS Catal. 6, 1153–1158 (2016).
-35. Feng, L. M. et al. Formability of ABO3 cubic perovskites. J. Phys. Chem. Solids
-69, 967–974 (2008).
-Acknowledgements
-W.Y. acknowledges funding support from the National Key Research and Development
-Program of China (grant No. 2016YFB0700700); National Natural Science Foundation of
-China (grant No. 11674237, 11974257) and the Priority Academic Program Develop-
-ment of Jiangsu Higher Education Institutions (PAPD). The theoretical work was carried
-out at the National Supercomputer Center in Tianjin and the calculations were per-
-formed on TianHe-1(A). This paper presents results from an NSF project (grant No.
-CBET−1433401) under the ‘NSF 14−15: NSF/DOE Partnership on Advanced Frontiers
-in Renewable Hydrogen Fuel Production via Solar Water Splitting Technologies’ project,
-which was co-sponsored by the National Science Foundation, Division of Chemical,
-Bioengineering, Environmental, and Transport Systems (CBET), and the U.S. Depart-
-ment of Energy, Ofﬁce of Energy Efﬁciency and Renewable Energy, Fuel Cell Technol-
-ogies Ofﬁce.
-Author contributions
-W.Y. and Y.Y. conceived the idea and supervised the project. W.Y. supervised the the-
-oretical study. Y.Y. supervised the experimental study. W.Y., Y.Y., and Q.S. performed
-data collection and analysis. Z.S. and W.Y. carried out SR calculations and analysis. B.W.,
-C.G., Z.Z., and Q.Y. performed materials synthesis and OER characterisation. W.Y., Y.Y.,
-and B.W. wrote the paper.
-Competing interests
-The authors declare no competing interests.
-Additional information
-Supplementary information is available for this paper at https://doi.org/10.1038/s41467-
-020-17263-9.
-Correspondence and requests for materials should be addressed to Y.Y. or W.-J.Y.
-Peer review information Nature Communications thanks Marcel Risch, Christopher
-Bartel and the other, anonymous, reviewer for their contribution to the peer review of
-this work. Peer reviewer reports are available.
-Reprints and permission information is available at http://www.nature.com/reprints
-Publisher’s note Springer Nature remains neutral with regard to jurisdictional claims in
-published maps and institutional afﬁliations.
-Open Access This article is licensed under a Creative Commons
-Attribution 4.0 International License, which permits use, sharing,
-adaptation, distribution and reproduction in any medium or format, as long as you give
-appropriate credit to the original author(s) and the source, provide a link to the Creative
-Commons license, and indicate if changes were made. The images or other third party
-material in this article are included in the article’s Creative Commons license, unless
-indicated otherwise in a credit line to the material. If material is not included in the
-article’s Creative Commons license and your intended use is not permitted by statutory
-regulation or exceeds the permitted use, you will need to obtain permission directly from
-the copyright holder. To view a copy of this license, visit http://creativecommons.org/
-licenses/by/4.0/.
-© The Author(s) 2020
-ARTICLE
-NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-020-17263-9
 8
-NATURE COMMUNICATIONS |   (2020) 11:3513 | https://doi.org/10.1038/s41467-020-17263-9 | www.nature.com/naturecommunications
+2
+1
+nn l
+Z Z
+m
+nlm
+Z
+n lm
+Z
+1 2
+1
+2
+=
++
+(6)
+where Z1 and Z2 are the symbols of elements. The element-pair and
+cation−anion-pair SOAPs were obtained on the basis of these
+procedures by using the DScribe code.47
+In the L-SOAP, atomic positions are not separately considered for
+every atom species, unlike the usual SOAP procedure. Instead, we
+weighted the broadened atomic positions in eq 4 on every atom as
+r
+we
+( )
+r
+R
+i
+N
+i
+1
+2
+i
+2
+=
+|
+|
+(7)
+where wi is its weight and N is the number of atoms within the cutoff
+radius. The bottom right panel of Figure 4 shows the schematic of the
+Journal of the American Chemical Society
+pubs.acs.org/JACS
+Article
+https://doi.org/10.1021/jacs.3c13574
+J. Am. Chem. Soc. 2024, 146, 9697−9708
+9704
+L-SOAP. Here, we replaced the Gaussian function in eq 7 with the
+delta function for easy calculation, resulting in changing the operation
+of integration in eq 5 to a summation as
+r
+c
+g
+Y
+w
+(
+)
+( ,
+)
+nlm
+i
+N
+n
+i
+lm
+i
+i
+i
+=
+| |
+(8)
+We connected the L-SOAPs to the ANN w/AL (see Figure 3c),
+which enables the model to learn the weights wi in eq 8 during
+training. Atomic species described by one-hot vectors are encoded at
+an embedding layer to atomic feature vectors as
+v
+x
+W
+i
+i
+emb
+=
+(9)
+where xi is a one-hot vector of an i-th atom in a system for describing
+its atomic species. Wemb is a weight matrix for encoding the one-hot
+vectors into the feature vectors vi. Here, the dimensions of the feature
+vectors were set to 32. Then, the weights for the L-SOAPs in eq 8 are
+calculated as
+v
+v
+r
+w
+f(
+,
+,
+)
+i
+i
+i
+center
+=
+| |
+(10)
+where vcenter is the atomic feature vector of the centered atom and vi is
+that of the atom located at |ri| from the center. The function f is a
+simple neural network with two hidden layers. The coefficients and
+SOAPs are then calculated according to eqs 6 and 8. The rest of the
+processes are the same as those for the ANN w/AL.
+SOAPs are typically inputted into a kernel function; however, we
+used nonkernel SOAPs, namely, the partial power spectrum vector in
+this study. The maxima of n (nmax) and l (lmax) for the radial basis
+functions and spherical harmonics were surveyed in combinations 3,
+5, and 7. The cutoff radius for the radial basis functions was fixed to
+7.0 Å and the standard deviation of the Gaussian function in eqs 4 and
+7 was set at 1.0 Å. The relatively large cutoff radius was used to
+include the surface effects in the SOAPs for atoms on layers below the
+surfaces, thereby improving prediction accuracy. For instance, a
+smaller cutoff radius of 5.0 Å in the Simple-NN for the IP prediction
+shows an MAE of 0.38 eV for the test data, which is clearly less
+accurate than the case of 7.0 Å, 0.23 eV.
+Procedures for Regression. Among various regression techni-
+ques, we selected ANNs for predicting IPs and EAs in this study
+because they offer flexible architecture, automatic extraction of
+relevant surface-region atoms, as described in Results and Discussion,
+and transferability to other systems.
+The simple-ANN shown in Figure 3a has a typical architecture with
+input, hidden, and output layers. The input vectors are averaged
+SOAPs of a system. Its hyperparameters, e.g., the number of hidden
+layers, are listed in Table S5. The rectified linear unit was used as an
+activation function, and the dropout rate was fixed at 0.5 in hidden
+layers that were not linked with the output layer.
+The data sets used in the regression were divided into training,
+validation, and test data sets with a ratio of 8:1:1, where we did not
+care about the distribution of the cation species in respective data sets.
+Fivefold cross validation using the validation data sets was performed
+for tuning the hyperparameters of the ANNs. We used back-
+propagation based on the Adam scheme69 to optimize all the learning
+parameters in the network, thereby minimizing the mean squared
+errors between the model outputs and the training targets. The
+learning rate for the optimization was 0.001, and the maximum epoch
+was 200. The training was terminated when the prediction accuracy of
+the validation data was converged to be almost constant as
+exemplified by the IP learning curve for the simple-NN in Figure
+S7. All of the training converged well within 200 epochs.
+■ASSOCIATED CONTENT
+*
+sı Supporting Information
+The Supporting Information is available free of charge at
+https://pubs.acs.org/doi/10.1021/jacs.3c13574.
+RMSE and MAE of all the considered combinations of
+the SOAP hyperparameters; profile of the weights from
+the attention layer; transfer learning versus learning from
+scratch; theoretical and predicted IPs and EAs for the
+ternary data sets; convergence of IPs, EAs, and surface
+energies; learning curve for IPs; prediction accuracies;
+134 prototypical binary oxides and surface orientation;
+PAW datasets and Hubbard U parameters; and hyper-
+parameters of the simple-ANN (PDF)
+Theoretical IPs and EAs of the 2195 binary and 718
+ternary oxide surfaces and related properties. Database
+contains the index, system (binary or ternary), chemical
+formula, space group number, Miller index, surface
+energy, IP, EA, and band gap (bulk) (XLSX)
+Supercells before and after structural optimization for
+the 2195 binary and 718 ternary oxide surfaces (ZIP)
+■AUTHOR INFORMATION
+Corresponding Authors
+Shin Kiyohara −Laboratory for Materials and Structures,
+Institute of Innovative Research, Tokyo Institute of
+Technology, Yokohama 226-8501, Japan; Institute for
+Materials Research, Tohoku University, Sendai 980-8577,
+Japan;
+orcid.org/0000-0003-2890-5760;
+Email: shin.kiyohara.d6@tohoku.ac.jp
+Fumiyasu Oba −Laboratory for Materials and Structures,
+Institute of Innovative Research, Tokyo Institute of
+Technology, Yokohama 226-8501, Japan; MDX Research
+Center for Element Strategy, International Research Frontiers
+Initiative, Tokyo Institute of Technology, Yokohama 226-
+8501, Japan;
+orcid.org/0000-0001-7178-5333;
+Email: oba@msl.titech.ac.jp
+Author
+Yoyo Hinuma −Department of Energy and Environment,
+National Institute of Advanced Industrial Science and
+Technology (AIST), Ikeda, Osaka 563-8577, Japan;
+orcid.org/0000-0003-2272-1178
+Complete contact information is available at:
+https://pubs.acs.org/10.1021/jacs.3c13574
+Notes
+The authors declare no competing financial interest.
+■ACKNOWLEDGMENTS
+This work was supported by JSPS KAKENHI (grant nos.
+JP20J00773, JP20H00302, and JP23K13811), KISTEC Proj-
+ect, MEXT Data Creation and Utilization Type Material
+Research
+and
+Development
+Project
+(grant
+no.
+JPMXP1122683430),
+and
+JST
+CREST
+(grant
+no.
+JPMJCR17J2), Japan. The computing resources of Academic
+Center for Computing and Media Studies at Kyoto University
+and Research Institute for Information Technology at Kyushu
+University were used for this work.
+■REFERENCES
+(1) Moniz, S. J. A.; Shevlin, S. A.; Martin, D. J.; Guo, Z.-X.; Tang, J.
+Visible-Light Driven Heterojunction Photocatalysts for Water
+Splitting −a Critical Review. Energy Environ. Sci. 2015, 8 (3),
+731−759.
+(2) Scanlon, D. O.; Dunnill, C. W.; Buckeridge, J.; Shevlin, S. A.;
+Logsdail, A. J.; Woodley, S. M.; Catlow, C. R. A.; Powell, M. J.;
+Palgrave, R. G.; Parkin, I. P.; Watson, G. W.; Keal, T. W.; Sherwood,
+P.; Walsh, A.; Sokol, A. A. Band Alignment of Rutile and Anatase
+TiO2. Nat. Mater. 2013, 12 (9), 798−801.
+Journal of the American Chemical Society
+pubs.acs.org/JACS
+Article
+https://doi.org/10.1021/jacs.3c13574
+J. Am. Chem. Soc. 2024, 146, 9697−9708
+9705
+(3) Zhang, Z.; Yates, J. T. Band Bending in Semiconductors:
+Chemical and Physical Consequences at Surfaces and Interfaces.
+Chem. Rev. 2012, 112 (10), 5520−5551.
+(4) Polman, A.; Knight, M.; Garnett, E. C.; Ehrler, B.; Sinke, W. C.
+Photovoltaic Materials: Present Efficiencies and Future Challenges.
+Science 2016, 352 (6283), aad4424.
+(5) Green, M. A.; Bremner, S. P. Energy Conversion Approaches
+and Materials for High-Efficiency Photovoltaics. Nat. Mater. 2017, 16
+(1), 23−34.
+(6) Chen, J.; Park, N.-G. Materials and Methods for Interface
+Engineering toward Stable and Efficient Perovskite Solar Cells. ACS
+Energy Lett. 2020, 5 (8), 2742−2786.
+(7) Robertson, J. Band Offsets, Schottky Barrier Heights, and Their
+Effects on Electronic Devices. J. Vac. Sci. Technol., A 2013, 31 (5),
+050821.
+(8) Ponce, F. A.; Bour, D. P. Nitride-Based Semiconductors for Blue
+and Green Light-Emitting Devices. Nature 1997, 386 (6623), 351−
+359.
+(9) Mannhart, J.; Schlom, D. G. Oxide InterfacesAn Opportunity
+for Electronics. Science 2010, 327 (5973), 1607−1611.
+(10) Janotti, A.; Van de Walle, C. G. Absolute Deformation
+Potentials and Band Alignment of Wurtzite ZnO, MgO, and CdO.
+Phys. Rev. B: Condens. Matter Mater. Phys. 2007, 75 (12), 121201.
+(11) Li, Y.-H.; Walsh, A.; Chen, S.; Yin, W.-J.; Yang, J.-H.; Li, J.; Da
+Silva, J. L. F.; Gong, X. G.; Wei, S.-H. Revised Ab Initio Natural Band
+Offsets of All Group IV, II-VI, and III-V Semiconductors. Appl. Phys.
+Lett. 2009, 94 (21), 212109.
+(12) Cho, S.; Kim, S.; Kim, J. H.; Zhao, J.; Seok, J.; Keum, D. H.;
+Baik, J.; Choe, D.; Chang, K. J.; Suenaga, K.; Kim, S. W.; Lee, Y. H.;
+Yang, H. Phase Patterning for Ohmic Homojunction Contact in
+MoTe2. Science 2015, 349 (6248), 625−628.
+(13) Walzer, K.; Maennig, B.; Pfeiffer, M.; Leo, K. Highly Efficient
+Organic Devices Based on Electrically Doped Transport Layers.
+Chem. Rev. 2007, 107 (4), 1233−1271.
+(14) Cahen, D.; Kahn, A. Electron Energetics at Surfaces and
+Interfaces: Concepts and Experiments. Adv. Mater. 2003, 15 (4),
+271−277.
+(15) Stevanović, V.; Hartman, K.; Jaramillo, R.; Ramanathan, S.;
+Buonassisi, T.; Graf, P. Variations of Ionization Potential and Electron
+Affinity as a Function of Surface Orientation: The Case of
+Orthorhombic SnS. Appl. Phys. Lett. 2014, 104 (21), 211603.
+(16) Hinuma, Y.; Grüneis, A.; Kresse, G.; Oba, F. Band Alignment of
+Semiconductors from Density-Functional Theory and Many-Body
+Perturbation Theory. Phys. Rev. B: Condens. Matter Mater. Phys. 2014,
+90 (15), 155405.
+(17) Chen, W.; Pasquarello, A. Band-Edge Positions in GW: Effects
+of Starting Point and Self-Consistency. Phys. Rev. B: Condens. Matter
+Mater. Phys. 2014, 90 (16), 165133.
+(18) Moses, P. G.; Miao, M.; Yan, Q.; Van de Walle, C. G. Hybrid
+Functional Investigations of Band Gaps and Band Alignments for
+AlN, GaN, InN, and InGaN. J. Chem. Phys. 2011, 134 (8), 084703.
+(19) Komsa, H.-P.; Broqvist, P.; Pasquarello, A. Alignment of Defect
+Levels and Band Edges through Hybrid Functionals: Effect of
+Screening in the Exchange Term. Phys. Rev. B: Condens. Matter Mater.
+Phys. 2010, 81 (20), 205118.
+(20) Oba, F.; Kumagai, Y. Design and Exploration of Semi-
+conductors from First Principles: A Review of Recent Advances. Appl.
+Phys. Express 2018, 11 (6), 060101.
+(21) Hinuma, Y.; Kumagai, Y.; Tanaka, I.; Oba, F. Band Alignment
+of Semiconductors and Insulators Using Dielectric-Dependent Hybrid
+Functionals: Toward High-Throughput Evaluation. Phys. Rev. B:
+Condens. Matter Mater. Phys. 2017, 95 (7), 075302.
+(22) Butler, K. T.; Hendon, C. H.; Walsh, A. Electronic Chemical
+Potentials of Porous Metal−Organic Frameworks. J. Am. Chem. Soc.
+2014, 136 (7), 2703−2706.
+(23) Jacobs, R.; Booske, J.; Morgan, D. Understanding and
+Controlling the Work Function of Perovskite Oxides Using Density
+Functional Theory. Adv. Funct. Mater. 2016, 26 (30), 5471−5482.
+(24) Grüneis, A.; Kresse, G.; Hinuma, Y.; Oba, F. Ionization
+Potentials of Solids: The Importance of Vertex Corrections. Phys. Rev.
+Lett. 2014, 112 (9), 096401.
+(25) Ping, Y.; Rocca, D.; Galli, G. Electronic Excitations in Light
+Absorbers for Photoelectrochemical Energy Conversion: First
+Principles Calculations Based on Many Body Perturbation Theory.
+Chem. Soc. Rev. 2013, 42 (6), 2437.
+(26) Deacon-Smith, D. E. E.; Scanlon, D. O.; Catlow, C. R. A.;
+Sokol, A. A.; Woodley, S. M. Interlayer Cation Exchange Stabilizes
+Polar Perovskite Surfaces. Adv. Mater. 2014, 26 (42), 7252−7256.
+(27) Setvin, M.; Reticcioli, M.; Poelzleitner, F.; Hulva, J.; Schmid,
+M.; Boatner, L. A.; Franchini, C.; Diebold, U. Polarity Compensation
+Mechanisms on the Perovskite Surface KTaO3 (001). Science 2018,
+359 (6375), 572−575.
+(28) Enterkin, J. A.; Subramanian, A. K.; Russell, B. C.; Castell, M.
+R.; Poeppelmeier, K. R.; Marks, L. D. A Homologous Series of
+Structures on the Surface of SrTiO3 (110). Nat. Mater. 2010, 9 (3),
+245−248.
+(29) Lazzeri, M.; Selloni, A. Stress-Driven Reconstruction of an
+Oxide Surface: The Anatase TiO2 (001)-(1 × 4) Surface. Phys. Rev.
+Lett. 2001, 87 (26), 266105.
+(30) Zhu, Q.; Li, L.; Oganov, A. R.; Allen, P. B. Evolutionary
+Method for Predicting Surface Reconstructions with Variable
+Stoichiometry. Phys. Rev. B: Condens. Matter Mater. Phys. 2013, 87
+(19), 195317.
+(31) Wanzenböck, R.; Arrigoni, M.; Bichelmaier, S.; Buchner, F.;
+Carrete, J.; Madsen, G. K. H. Neural-Network-Backed Evolutionary
+Search for SrTiO3 (110) Surface Reconstructions. Digital Discovery
+2022, 1 (5), 703−710.
+(32) Mochizuki, Y.; Sung, H.-J.; Gake, T.; Oba, F. Chemical Trends
+of Surface Reconstruction and Band Positions of Nonmetallic
+Perovskite Oxides from First Principles. Chem. Mater. 2023, 35 (5),
+2047−2057.
+(33) Kim, S.; Sinai, O.; Lee, C.-W.; Rappe, A. M. Controlling Oxide
+Surface Dipole and Reactivity with Intrinsic Nonstoichiometric
+Epitaxial Reconstructions. Phys. Rev. B: Condens. Matter Mater. Phys.
+2015, 92 (23), 235431.
+(34) Stanev, V.; Oses, C.; Kusne, A. G.; Rodriguez, E.; Paglione, J.;
+Curtarolo, S.; Takeuchi, I. Machine Learning Modeling of Super-
+conducting Critical Temperature. npj Comput. Mater. 2018, 4 (1), 29.
+(35) Kiyohara, S.; Oda, H.; Miyata, T.; Mizoguchi, T. Prediction of
+Interface Structures and Energies via Virtual Screening. Sci. Adv. 2016,
+2 (11), 1600746.
+(36) Schütt, K. T.; Sauceda, H. E.; Kindermans, P.-J.; Tkatchenko,
+A.; Müller, K. R. SchNet −A Deep Learning Architecture for
+Molecules and Materials. J. Chem. Phys. 2018, 148 (24), 241722.
+(37) Freeze, J. G.; Kelly, H. R.; Batista, V. S. Search for Catalysts by
+Inverse Design: Artificial Intelligence, Mountain Climbers, and
+Alchemists. Chem. Rev. 2019, 119 (11), 6595−6612.
+(38) Xie, T.; Grossman, J. C. Crystal Graph Convolutional Neural
+Networks for an Accurate and Interpretable Prediction of Material
+Properties. Phys. Rev. Lett. 2018, 120 (14), 145301.
+(39) Butler, K. T.; Davies, D. W.; Cartwright, H.; Isayev, O.; Walsh,
+A. Machine Learning for Molecular and Materials Science. Nature
+2018, 559 (7715), 547−555.
+(40) Kang, S.; Jeong, W.; Hong, C.; Hwang, S.; Yoon, Y.; Han, S.
+Accelerated Identification of Equilibrium Structures of Multi-
+component Inorganic Crystals Using Machine Learning Potentials.
+npj Comput. Mater. 2022, 8 (1), 108.
+(41) Shen, C.; Li, T.; Zhang, Y.; Xie, R.; Long, T.; Fortunato, N. M.;
+Liang, F.; Dai, M.; Shen, J.; Wolverton, C. M.; Zhang, H. Accelerated
+Screening of Ternary Chalcogenides for Potential Photovoltaic
+Applications. J. Am. Chem. Soc. 2023, 145 (40), 21925−21936.
+(42) Hwang, S.; Jung, J.; Hong, C.; Jeong, W.; Kang, S.; Han, S.
+Stability and Equilibrium Structures of Unknown Ternary Metal
+Oxides Explored by Machine-Learned Potentials. J. Am. Chem. Soc.
+2023, 145 (35), 19378−19386.
+Journal of the American Chemical Society
+pubs.acs.org/JACS
+Article
+https://doi.org/10.1021/jacs.3c13574
+J. Am. Chem. Soc. 2024, 146, 9697−9708
+9706
+(43) Kim, M.; Yeo, B. C.; Park, Y.; Lee, H. M.; Han, S. S.; Kim, D.
+Artificial Intelligence to Accelerate the Discovery of N2 Electro-
+reduction Catalysts. Chem. Mater. 2020, 32 (2), 709−720.
+(44) Chen, C.; Ong, S. P. A Universal Graph Deep Learning
+Interatomic Potential for the Periodic Table. Nat. Comput. Sci. 2022,
+2 (11), 718−728.
+(45) Bartók, A. P.; Kondor, R.; Csányi, G. On Representing
+Chemical Environments. Phys. Rev. B: Condens. Matter Mater. Phys.
+2013, 87 (18), 184115.
+(46) Dulub, O.; Diebold, U.; Kresse, G. Novel Stabilization
+Mechanism on Polar Surfaces: ZnO (0001)-Zn. Phys. Rev. Lett.
+2003, 90 (1), 016102.
+(47) Himanen, L.; Jäger, M. O. J.; Morooka, E. V.; Canova, F. F.;
+Ranawat, Y. S.; Gao, D. Z.; Rinke, P.; Foster, A. S. DScribe: Library of
+Descriptors for Machine Learning in Materials Science. Comput. Phys.
+Commun. 2020, 247, 106949.
+(48) Hinuma, Y.; Kamachi, T.; Hamamoto, N. Algorithm for
+Automatic Detection of Surface Atoms. Trans. Mater. Res. Soc. Jpn.
+2020, 45 (4), 115−120.
+(49) Goodall, R. E. A.; Lee, A. A. Predicting Materials Properties
+without Crystal Structure: Deep Representation Learning from
+Stoichiometry. Nat. Commun. 2020, 11 (1), 6280.
+(50) Wang, A. Y. T.; Kauwe, S. K.; Murdock, R. J.; Sparks, T. D.
+Compositionally Restricted Attention-Based Network for Materials
+Property Predictions. npj Comput. Mater. 2021, 7 (1), 77.
+(51) Hinuma, Y.; Hayashi, H.; Kumagai, Y.; Tanaka, I.; Oba, F.
+Comparison of Approximations in Density Functional Theory
+Calculations: Energetics and Structure of Binary Oxides. Phys. Rev.
+B: Condens. Matter Mater. Phys. 2017, 96 (9), 094102.
+(52) Hinuma, Y.; Kumagai, Y.; Oba, F.; Tanaka, I. Categorization of
+Surface Polarity from a Crystallographic Approach. Comput. Mater.
+Sci. 2016, 113, 221−230.
+(53) Jain, A.; Ong, S. P.; Hautier, G.; Chen, W.; Richards, W. D.;
+Dacek, S.; Cholia, S.; Gunter, D.; Skinner, D.; Ceder, G.; Persson, K.
+A. Commentary: The Materials Project: A Materials Genome
+Approach to Accelerating Materials Innovation. APL Mater. 2013, 1
+(1), 011002.
+(54) Blöchl, P. E. Projector Augmented-Wave Method. Phys. Rev. B:
+Condens. Matter Mater. Phys. 1994, 50 (24), 17953−17979.
+(55) Kresse, G.; Furthmüller, J. Efficient Iterative Schemes for Ab
+Initio Total-Energy Calculations Using a Plane-Wave Basis Set. Phys.
+Rev. B: Condens. Matter Mater. Phys. 1996, 54 (16), 11169−11186.
+(56) Kresse, G.; Joubert, D. From Ultrasoft Pseudopotentials to the
+Projector Augmented-Wave Method. Phys. Rev. B: Condens. Matter
+Mater. Phys. 1999, 59 (3), 1758−1775.
+(57) Perdew, J. P.; Ernzerhof, M.; Burke, K. Rationale for Mixing
+Exact Exchange with Density Functional Approximations. J. Chem.
+Phys. 1996, 105 (22), 9982−9985.
+(58) Adamo, C.; Barone, V. Toward Reliable Density Functional
+Methods without Adjustable Parameters: The PBE0 Model. J. Chem.
+Phys. 1999, 110 (13), 6158−6170.
+(59) Skone, J. H.; Govoni, M.; Galli, G. Self-Consistent Hybrid
+Functional for Condensed Systems. Phys. Rev. B: Condens. Matter
+Mater. Phys. 2014, 89 (19), 195112.
+(60) Gerosa, M.; Bottani, C. E.; Caramella, L.; Onida, G.; Di
+Valentin, C.; Pacchioni, G. Electronic Structure and Phase Stability of
+Oxide Semiconductors: Performance of Dielectric-Dependent Hybrid
+Functional DFT, Benchmarked against GW Band Structure
+Calculations and Experiments. Phys. Rev. B: Condens. Matter Mater.
+Phys. 2015, 91 (15), 155201.
+(61) Perdew, J. P.; Ruzsinszky, A.; Csonka, G. I.; Vydrov, O. A.;
+Scuseria, G. E.; Constantin, L. A.; Zhou, X.; Burke, K. Restoring the
+Density-Gradient Expansion for Exchange in Solids and Surfaces.
+Phys. Rev. Lett. 2008, 100 (13), 136406.
+(62) Tran, F. On the Accuracy of the Non-Self-Consistent
+Calculation of the Electronic Structure of Solids with Hybrid
+Functionals. Phys. Lett. A 2012, 376 (6−7), 879−882.
+(63) Dudarev, S. L.; Botton, G. A.; Savrasov, S. Y.; Humphreys, C. J.;
+Sutton, A. P. Electron-Energy-Loss Spectra and the Structural Stability
+of Nickel Oxide: An LSDA+U Study. Phys. Rev. B: Condens. Matter
+Mater. Phys. 1998, 57 (3), 1505−1509.
+(64) Tasker, P. W. The Stability of Ionic Crystal Surfaces. J. Phys. C
+Solid State Phys. 1979, 12 (22), 4977−4984.
+(65) Hinuma, Y.; Pizzi, G.; Kumagai, Y.; Oba, F.; Tanaka, I. Band
+Structure Diagram Paths Based on Crystallography. Comput. Mater.
+Sci. 2017, 128, 140−184.
+(66) Togo, A.; Tanaka, I. Spglib: A Software Library for Crystal
+Symmetry Search. arXiv 2018, arXiv:1808.01590 [cond-mat.mtrl-sci].
+(67) Bartók, A. P.; Kermode, J.; Bernstein, N.; Csányi, G. Machine
+Learning a General-Purpose Interatomic Potential for Silicon. Phys.
+Rev. X 2018, 8 (4), 041048.
+(68) De, S.; Bartók, A. P.; Csányi, G.; Ceriotti, M. Comparing
+Molecules and Solids across Structural and Alchemical Space. Phys.
+Chem. Chem. Phys. 2016, 18 (20), 13754−13769.
+(69) Kingma, D. P.; Ba, J. Adam: A Method for Stochastic
+Optimization. arXiv, 2016, arXiv:1412.6980[cs.LG].
+(70) Jaouen, T.; Jézéquel, G.; Delhaye, G.; Lépine, B.; Turban, P.;
+Schieffer, P. Work Function Shifts, Schottky Barrier Height, and
+Ionization Potential Determination of Thin MgO Films on Ag (001).
+Appl. Phys. Lett. 2010, 97 (23), 232104.
+(71) Roessler, D. M.; Walker, W. C. Electronic Spectrum and
+Ultraviolet Optical Properties of Crystalline MgO. Phys. Rev. 1967,
+159 (3), 733−738.
+(72) Käämbre, H. A comment on “The Effective Electron Affinity
+Estimation from the Simultaneous Detection of Thermally Stimulated
+Luminescence and Exoelectronic Emission. Application to an α-
+Alumina Single Crystal”. J. Phys. D Appl. Phys. 1997, 30, 1961−1962.
+(73) Innocenzi, M. E.; Swimm, R. T.; Bass, M.; French, R. H.;
+Villaverde, A. B.; Kokta, M. R. Room-Temperature Optical
+Absorption in Undoped α-Al2O3. J. Appl. Phys. 1990, 67 (12),
+7542−7546.
+(74) Kashiwaya, S.; Morasch, J.; Streibel, V.; Toupance, T.;
+Jaegermann, W.; Klein, A. The Work Function of TiO2. Surfaces
+2018, 1 (1), 73−89.
+(75) Meyer, J.; Hamwi, S.; Kröger, M.; Kowalsky, W.; Riedl, T.;
+Kahn, A. Transition Metal Oxides for Organic Electronics: Energetics,
+Device Physics and Applications. Adv. Mater. 2012, 24 (40), 5408−
+5427.
+(76) Chu, C.-Y.; Huang, M. H. Facet-Dependent Photocatalytic
+Properties of Cu2O Crystals Probed by Using Electron, Hole and
+Radical Scavengers. J. Mater. Chem. A 2017, 5 (29), 15116−15123.
+(77) Jacobi, K.; Zwicker, G.; Gutmann, A. Work Function, Electron
+Affinity and Band Bending of Zinc Oxide Surfaces. Surf. Sci. 1984, 141
+(1), 109−125.
+(78) Mönch, W. Semiconductor Surfaces and Interfaces, 3rd ed.;
+Springer Series in Surface Sciences; Springer Berlin Heidelberg:
+Berlin, Heidelberg, 2001; Vol. 26.
+(79) McLeod, J. A.; Wilks, R. G.; Skorikov, N. A.; Finkelstein, L. D.;
+Abu-Samak, M.; Kurmaev, E. Z.; Moewes, A. Band Gaps and
+Electronic Structure of Alkaline-Earth and Post-Transition-Metal
+Oxides. Phys. Rev. B: Condens. Matter Mater. Phys. 2010, 81 (24),
+245123.
+(80) Swinnich, E.; Hasan, M. N.; Zeng, K.; Dove, Y.; Singisetti, U.;
+Mazumder, B.; Seo, J. H. Flexible β-Ga2O3 Nanomembrane Schottky
+Barrier Diodes. Adv. Electron. Mater. 2019, 5 (3), 1−8.
+(81) Mohamed, M.; Irmscher, K.; Janowitz, C.; Galazka, Z.; Manzke,
+R.; Fornari, R. Schottky Barrier Height of Au on the Transparent
+Semiconducting Oxide β-Ga2O3. Appl. Phys. Lett. 2012, 101 (13),
+132106.
+(82) Kröger, M.; Hamwi, S.; Meyer, J.; Riedl, T.; Kowalsky, W.;
+Kahn, A. P-Type Doping of Organic Wide Band Gap Materials by
+Transition Metal Oxides: A Case-Study on Molybdenum Trioxide.
+Org. Electron. 2009, 10 (5), 932−938.
+(83) Greiner, M. T.; Helander, M. G.; Tang, W.-M.; Wang, Z.-B.;
+Qiu, J.; Lu, Z.-H. Universal Energy-Level Alignment of Molecules on
+Metal Oxides. Nat. Mater. 2012, 11 (1), 76−81.
+Journal of the American Chemical Society
+pubs.acs.org/JACS
+Article
+https://doi.org/10.1021/jacs.3c13574
+J. Am. Chem. Soc. 2024, 146, 9697−9708
+9707
+(84) Lei, Y.; Lu, X. The Decisive Effect of Interface States on the
+Photocatalytic Activity of the Silver(I) Oxide/Titanium Dioxide
+Heterojunction. J. Colloid Interface Sci. 2017, 492, 167−175.
+(85) Hohmann, M. V.; Ágoston, P.; Wachau, A.; Bayer, T. J. M.;
+Brötz, J.; Albe, K.; Klein, A. Orientation Dependent Ionization
+Potential of In2O3: A Natural Source for Inhomogeneous Barrier
+Formation at Electrode Interfaces in Organic Electronics. J. Phys.:
+Condens. Matter 2011, 23 (33), 334203.
+(86) Walsh, A.; Da Silva, J. L. F.; Wei, S.-H.; Körber, C.; Klein, A.;
+Piper, L. F. J.; DeMasi, A.; Smith, K. E.; Panaccione, G.; Torelli, P.;
+Payne, D. J.; Bourlange, A.; Egdell, R. G. Nature of the Band Gap of
+In2O3 Revealed by First-Principles Calculations and X-Ray Spectros-
+copy. Phys. Rev. Lett. 2008, 100 (16), 167402.
+(87) Wardenga, H. F. Surface Potentials of Ceria and Their Influence
+on the Surface Exchange of Oxygen; Technische Universität Darmstadt:
+Darmstadt, Germany, 2019.
+(88) Meyer, J.; Kröger, M.; Hamwi, S.; Gnam, F.; Riedl, T.;
+Kowalsky, W.; Kahn, A. Charge Generation Layers Comprising
+Transition Metal-Oxide/Organic Interfaces: Electronic Structure and
+Charge Generation Mechanism. Appl. Phys. Lett. 2010, 96 (19), 1−4.
+Journal of the American Chemical Society
+pubs.acs.org/JACS
+Article
+https://doi.org/10.1021/jacs.3c13574
+J. Am. Chem. Soc. 2024, 146, 9697−9708
+9708
 

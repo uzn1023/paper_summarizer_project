@@ -16,8 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
+from paper_summarizer import views
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path('', include('paper_summarizer.urls')),
+    path('admin/', admin.site.urls),
+    path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    path('signup/', views.SignUpView.as_view(), name='signup'),
+    path('', include("django.contrib.auth.urls")),
+    path('', login_required(views.upload_pdf), name='upload_pdf'),  # ルートURLに対応するパターン
+    path('activate/<uidb64>/<token>/', views.ActivateView.as_view(), name='activate'),
 ]

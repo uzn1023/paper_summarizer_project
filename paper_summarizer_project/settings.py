@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-9%l6+9a&jd$ty$hecu&qr+chw_ya7_4tbp)1nej5rj1#1l5@%+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -104,9 +104,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ja"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Tokyo"
 
 USE_I18N = True
 
@@ -122,3 +122,19 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+#ユーザ登録確認メールを送信
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'uzn1023@gmail.com'
+EMAIL_HOST_PASSWORD = 'jywrcuqggeyldyzq'
+EMAIL_USE_TLS = True
+
+LOGIN_URL = "/login/"
+LOGIN_REDIRECT_URL = "login"
+LOGOUT_REDIRECT_URL = "/"
+
+AUTH_USER_MODEL = 'paper_summarizer.User'
+
+FRONTEND_URL = "https://localhost:8000"
