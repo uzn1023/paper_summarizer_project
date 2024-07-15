@@ -1,34 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Summary Result</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .container { width: 80%; margin: auto; padding: 20px; }
-    </style>
-</head>
-<body>
+{% extends "base.html" %}
+{% block main %}
     <div class="container">
-        <h1>Summary</h1>
-        <table>
+        <h2>{{summary.title}}</h2>
+
+        <div class="mermaid">
+            {{ summary.mindmap }}
+        </div>
+
+        <table class="table table-striped">
             {% for key, value in summary.items %}
                 <tr>
                     <th>{{ key }}</th>
                     <td>
-                        {% if value is iterable and not value|stringformat:"s" %}
-                            <ul>
+                        <div id="{{ key }}">
+                            {% if key == "authors" or key == "論文のキーワード" %}
                                 {% for item in value %}
-                                    <li>{{ item }}</li >
+                                    {{ item.name|safe }},
                                 {% endfor %}
-                            </ul>
-                        {% else %}
-                            {{ value|safe }}
-                        {% endif %}
+                            {% elif key == "各章要約" %}
+                                {% for item in value %}
+                                    {{ item|safe }} <br><br>
+                                {% endfor %}
+                            {% else %}
+                                {{ value|safe }}
+                            {% endif %}
+                        </div>
                     </td>
                 </tr>
             {% endfor %}
         </table>
+
         <a href="{% url 'upload_pdf' %}">Upload another PDF</a>
     </div>
-</body>
-</html>
+{% endblock %}

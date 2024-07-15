@@ -1,5 +1,21 @@
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="{{ submit_label }}" />
+
+    {% for key, errors in form.errors.items %}
+        <div class="text-danger">
+            {% for error in errors %}
+                <small>{{ error }}</small>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    {% for field in form %}
+        <div class="text-center">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+        </div>
+    {% endfor %}
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">{{ submit_label }}</button>
+    </div>
 </form>

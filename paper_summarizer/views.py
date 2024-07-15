@@ -16,7 +16,7 @@ def upload_pdf(request):
                 return render(request, 'paper_summarizer/upload.html', {'form': form, 'error': 'Please upload a valid PDF file.'})
             try:
                 text = extract_text_from_pdf(pdf)
-                summary = summarize_text(text)
+                summary = summarize_text(text, request.user.GeminiAPI)
                 return render(request, 'paper_summarizer/result.html', {'summary': summary})
             except Exception as e:
                 return render(request, 'paper_summarizer/upload.html', {'form': form, 'error': str(e)})

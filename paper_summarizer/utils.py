@@ -11,11 +11,11 @@ def extract_text_from_pdf(pdf_file):
             print(text, file=f)
     return text
 
-def summarize_text(text):
+def summarize_text(text, GEMINI_API_KEY):
     if len(text) < 100:
         return "The text is too short to summarize."
     try:
-        summary = get_summarize_by_format_from_text(text)
+        summary = get_summarize_by_format_from_text(text, GEMINI_API_KEY)
         return summary if summary else "Summarization failed. Please check the content of the PDF."
     except ValueError:
         return "Summarization failed. Please check the content of the PDF."

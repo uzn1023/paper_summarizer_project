@@ -1,37 +1,40 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>PDF Upload</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .container { width: 50%; margin: auto; padding: 20px; }
-        .error { color: red; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Upload PDF</h1>
+{% extends "base.html" %}
+{% block main %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
         {% if error %}
-            <p class="error">{{ error }}</p>
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
         {% endif %}
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Upload</button>
+            <div class="form-group">
+                <div class="custom-file">
+                    {{ form.pdf }}
+                    <label class="custom-file-label" for="{{ form.pdf.id_for_label }}">ファイルを選択...</label>
+                </div>
+                {% if form.pdf.help_text %}
+                    <small class="form-text text-muted">{{ form.pdf.help_text }}</small>
+                {% endif %}
+            </div>
+            <div id="selected-file-name" class="mt-2"></div>
+            <button type="submit" class="btn btn-primary btn-block mt-4">アップロード</button>
         </form>
-
-        <p>{{ user }}さん、ログイン中</p>
-
-            <form action="{% url 'logout' %}" method="post" name="f_logout">
-                {% csrf_token %}
-                <input type="hidden" value="logout">
-                <a href="javascript:f_logout.submit()" class="logout nav-link">ログアウト</a>
-            </form>
-        </p>
-        <p><a href="{% url 'password_change' %}">パスワードの変更</a></p>
-        <p><a href="{% url 'password_reset' %}">パスワードを忘れた場合</a></p>
-        <p>
     </div>
+</div>
 
-</body>
-</html>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var fileInput = document.getElementById('{{ form.pdf.id_for_label }}');
+    var fileLabel = document.querySelector('.custom-file-label');
+    var selectedFileName = document.getElementById('selected-file-name');
+
+    fileInput.addEventListener('change', function(e) {
+        var fileName = e.target.files[0].name;
+        fileLabel.textContent = fileName;
+        selectedFileName.innerHTML = '<strong>選択されたファイル:</strong> ' + fileName;
+    });
+});
+</script>
+{% endblock %}

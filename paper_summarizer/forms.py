@@ -7,21 +7,25 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.conf import settings
 
 class UploadPDFForm(forms.Form):
-    pdf = forms.FileField()
+    pdf = forms.FileField(
+        label='PDFファイル',
+        help_text='アップロードするPDFファイルを選択してください。',
+        widget=forms.FileInput(attrs={'accept': 'application/pdf'})
+    )
 
 User = get_user_model()
 
 class SignUpForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2")
+        fields = ("username", "email", "GeminiAPI", "NotionAPI", "password1", "password2")
     
     @staticmethod
     def get_activate_url(user):
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
         protocol = 'https' if not settings.DEBUG else 'http'
-        return f"{protocol}://{settings.ALLOWED_HOSTS[0]}/activate/{uid}/{token}/"
+        return f"{protocol}://{settings.ALLOWED_HOSTS[0]}:8000/activate/{uid}/{token}/"
 
     def save(self, commit=True):
         user = super().save(commit=False)

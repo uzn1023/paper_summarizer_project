@@ -1,40 +1,15 @@
 import google.generativeai as genai
 import json
-import time
 
-genai.configure(api_key="AIzaSyADQjAMHtHcl56OMkWcrSijWwGosQzeFME")
-model_name = "gemini-1.5-flash-latest"
-model = genai.GenerativeModel(model_name)
-model_json = genai.GenerativeModel(
-    model_name,
-    generation_config={"response_mime_type": "application/json"}
-    )
-    
+def get_summarize_by_format_from_text(text, GEMINI_API_KEY):
 
-def get_properties_from_text(text):
-    prompt = ["""次のJSONスキーマを使用して、
-        以下の論文textからtitle, authors, publish date(yyyy-mm-dd形式), 10. から始まるDOIを抽出して。
+    genai.configure(api_key=GEMINI_API_KEY)
+    model_name = "gemini-1.5-flash-latest"
+    model_json = genai.GenerativeModel(
+        model_name,
+        generation_config={"response_mime_type": "application/json"}
+        )
 
-        {
-
-        }
-        Return: dict
-
-        
-    """
-    ,text]
-    for _ in range(5):
-        try:
-            response = model_json.generate_content(prompt).text
-            response = json.loads(response, strict=False)
-            response['authors'] = [{'name': author.replace(',', '.')} for author in response['authors']]
-            break
-        except Exception as e:
-            print(f"Error summarizing paper:{e}")
-            time.sleep(10)
-    return response
-
-def get_summarize_by_format_from_text(text):
     prompt1 = ["""
             次の学術論文の全文 text から、以下のJSONスキーマに沿って情報を抽出して下さい。
 
@@ -67,16 +42,16 @@ def get_summarize_by_format_from_text(text):
 
             **主張とキーワードの抽出**
             1. 論文の主題を一言にまとめてください(15文字以内)
-            2. 論文の重要な主張を3-5つ、20文字以内の体言止めの形で、簡潔に書き出してください
+            2. 論文の重要な主張を3-5つ、10文字以内のキーワードの形で、簡潔に書き出してください
             3. 書き出した主張に関係するキーワード(ただし主張に直接は含まれないキーワード)を各主張に対してテキストから3-5つ書き出してください(英語)
             4. 主張に関連する図番号、表番号、参考文献番号を各主張に対して3-5つ書き出してください。図はFig1,3-5, 表はTbl2,4,6, 参考文献はRef3,7-9のように表記してください。
             *   例：      
             "主張とキーワードの抽出": [
             {"主題":"材料情報学に基づく逆設計フレームワーク"},
-            {"主張": "材料情報学に基づく逆設計フレームワークはGe/ZnS多層メタマテリアルを効率的に設計", "キーワード": ["material informatics", "inverse design", "multilayer metamaterials", "visible camouflage", "infrared camouflage", "Ge/ZnS"], "図表参考文献": ["Fig.1,3,4", "Ref.23,24"]},
-            {"主張": "ベイズ最適化アルゴリズムと伝達行列法を組み合わせメタマテリアルの構造を自動的に最適化", "キーワード": ["Bayesian optimization", "transfer matrix method", "machine learning", "optimization"], "図表参考文献": ["Fig. 1,2", "Ref.26-28"]},
-            {"主張": "シミュレーションと赤外実験の両方で優れた色合わせと赤外カモフラージュ性能", "キーワード": ["color matching", "infrared camouflage", "observation angle", "temperature"], "図表参考文献": ["Fig. 1-5","Ref.36,38"]},
-            {"主張": "材料情報学に基づく逆設計フレームワークは様々な多目的最適化問題に適用可能", "キーワード": ["multi-objective optimization", "multispectral camouflage", "applications"], "図表参考文献": []}
+            {"主張": "Ge/ZnS多層メタマテリアルを効率的に設計", "キーワード": ["material informatics", "inverse design", "multilayer metamaterials", "visible camouflage", "infrared camouflage", "Ge/ZnS"], "図表参考文献": ["Fig.1,3,4", "Ref.23,24"]},
+            {"主張": "メタマテリアルの構造を自動的に最適化", "キーワード": ["Bayesian optimization", "transfer matrix method", "machine learning", "optimization"], "図表参考文献": ["Fig. 1,2", "Ref.26-28"]},
+            {"主張": "優れた色合わせと赤外カモフラージュ性能", "キーワード": ["color matching", "infrared camouflage", "observation angle", "temperature"], "図表参考文献": ["Fig. 1-5","Ref.36,38"]},
+            {"主張": "様々な多目的最適化問題に適用可能", "キーワード": ["multi-objective optimization", "multispectral camouflage", "applications"], "図表参考文献": []}
             ]
                
             **出力形式**
@@ -86,15 +61,42 @@ def get_summarize_by_format_from_text(text):
 
     response1 = model_json.generate_content(prompt1).text
     response2 = model_json.generate_content(prompt2).text
+    
+    response1 = response1.replace("\\", "\\\\")
+    response2 = response2.replace("\\", "\\\\")
 
-    print(response1)
-    print(response2)
+    response1 = json.loads(response1, strict=False)
+    response2 = json.loads(response2, strict=False)
 
-    response = response1
-    response = response.replace("\\", "\\\\")
-    response = json.loads(response, strict=False)
-    response['authors'] = [{'name': author.replace(',', '.')} for author in response['authors']]
-    response['論文のキーワード'] = [{'name': author} for author in response['論文のキーワード']]
+    response1['authors'] = [{'name': author.replace(',', '.')} for author in response1['authors']]
+    response1['論文のキーワード'] = [{'name': author} for author in response1['論文のキーワード']]
+
+
+    response = dict(**response1, **response2)
+    response['mindmap'] = convert_to_mermaid(response)
+
+    print(response)
 
     return response
 
+# mermaidのmindmapを生成する
+def convert_to_mermaid(data):
+    mermaid_str = "mindmap\n"
+
+    def add_node(node, parent=None):
+        nonlocal mermaid_str
+        indent = "    "
+
+        if "主題" in node:
+            mermaid_str += f"{node['主題']}\n"
+        else:
+            mermaid_str += f"{indent}{node['主張']}\n"
+            for keyword in node.get('キーワード', []):
+                mermaid_str += f"{indent}{indent}({keyword})\n"
+            for ref in node.get('図表参考文献', []):
+                mermaid_str += f"{indent}{indent}{{{{{ref}}}}}\n"
+
+    for i, node in enumerate(data["主張とキーワードの抽出"]):
+        add_node(node, i)
+
+    return mermaid_str
