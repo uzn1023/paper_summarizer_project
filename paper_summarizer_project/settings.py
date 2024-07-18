@@ -31,9 +31,10 @@ env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = "django-insecure-9%l6+9a&jd$ty$hecu&qr+chw_ya7_4tbp)1nej5rj1#1l5@%+"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')if RENDER_EXTERNAL_HOSTNAME:    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
@@ -82,11 +83,10 @@ WSGI_APPLICATION = "paper_summarizer_project.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+default_dburl = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": config("DATABASE_URL", default=default_dburl, cast=dburl),
 }
 
 
