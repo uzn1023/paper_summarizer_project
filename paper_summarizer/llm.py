@@ -88,13 +88,13 @@ def convert_to_mermaid(data):
         indent = "    "
 
         if "主題" in node:
-            mermaid_str += f"{node['主題']}\n"
+            mermaid_str += f'id["{node["主題"]}"]\n'
         else:
-            mermaid_str += f"{indent}{node['主張']}\n"
+            mermaid_str += f'{indent}id["{node["主張"]}"]\n'
             for keyword in node.get('キーワード', []):
-                mermaid_str += f"{indent}{indent}({keyword})\n"
+                mermaid_str += f'{indent}{indent}id("{keyword}")\n'
             for ref in node.get('図表参考文献', []):
-                mermaid_str += f"{indent}{indent}{{{{{ref}}}}}\n"
+                mermaid_str += f'{indent}{indent}id{{{{"{ref}"}}}}\n'
 
     for i, node in enumerate(data["主張とキーワードの抽出"]):
         add_node(node, i)

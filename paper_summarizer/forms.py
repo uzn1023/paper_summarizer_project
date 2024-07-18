@@ -6,6 +6,9 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.conf import settings
 
+class URLForm(forms.Form):
+    url = forms.CharField(label='URL', max_length=100)
+
 class UploadPDFForm(forms.Form):
     pdf = forms.FileField(
         label='PDFファイル',
@@ -18,7 +21,7 @@ User = get_user_model()
 class SignUpForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ("username", "email", "GeminiAPI", "NotionAPI", "password1", "password2")
+        fields = ("username", "email", "GeminiAPI", "NotionAPI", "NotionDatabaseID", "password1", "password2")
     
     @staticmethod
     def get_activate_url(user):

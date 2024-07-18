@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block main %}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="{% url 'upload_pdf' %}">FROM PDF</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'upload_url' %}">FROM URL</a>
+            </li>
+        </ul>
+        <br>
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for item in form %}
+                <div class="form-group">
+                    <input
+                        name="{{item.name}}"
+                        id="{{item.name}}"
+                        class="form-control"
+                        placeholder="https://hogehogefugapiyo.com"
+                    >
+                    <small class="form-text text-muted">要約するPDFのURLを入力してください</small>
+                </div>
+            {% endfor %}
+            <div id="selected-file-name" class="mt-2"></div>
+            <button type="submit" class="btn btn-primary btn-block mt-4">要約する</button>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var fileInput = document.getElementById('{{ form.pdf.id_for_label }}');
+    var fileLabel = document.querySelector('.custom-file-label');
+    var selectedFileName = document.getElementById('selected-file-name');
+
+    fileInput.addEventListener('change', function(e) {
+        var fileName = e.target.files[0].name;
+        fileLabel.textContent = fileName;
+        selectedFileName.innerHTML = '<strong>選択されたファイル:</strong> ' + fileName;
+    });
+});
+</script>
+{% endblock %}

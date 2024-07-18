@@ -26,5 +26,7 @@ urlpatterns = [
     path('signup/', views.SignUpView.as_view(), name='signup'),
     path('', include("django.contrib.auth.urls")),
     path('', login_required(views.upload_pdf), name='upload_pdf'),  # ルートURLに対応するパターン
+    path('upload_pdf/', login_required(views.upload_pdf), name='upload_pdf'),
+    path('upload_url/', login_required(views.upload_url), name='upload_url'), 
     path('activate/<uidb64>/<token>/', views.ActivateView.as_view(), name='activate'),
 ]

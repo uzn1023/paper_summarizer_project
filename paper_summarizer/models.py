@@ -6,3 +6,4 @@ class User(AbstractUser):
     GeminiAPI = models.CharField(max_length=255, blank=True, null=True)
     OpenaiAPI = models.CharField(max_length=255, blank=True, null=True)
     NotionAPI = models.CharField(max_length=255, blank=True, null=True)
+    NotionDatabaseID = models.CharField(max_length=255, blank=True, null=True)

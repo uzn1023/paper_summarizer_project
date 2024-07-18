@@ -10,6 +10,7 @@
         <table class="table table-striped">
             {% for key, value in summary.items %}
                 <tr>
+                    {% if key != "主張とキーワードの抽出" and key != "mindmap" %}
                     <th>{{ key }}</th>
                     <td>
                         <div id="{{ key }}">
@@ -26,6 +27,7 @@
                             {% endif %}
                         </div>
                     </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </table>

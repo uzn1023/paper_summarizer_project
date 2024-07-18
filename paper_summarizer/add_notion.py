@@ -4,7 +4,8 @@ import re
 import os
 import argparse
 
-def add_notion(dict,images,database_id,NOTION_API_KEY):
+def add_notion(dict, database_id,NOTION_API_KEY):
+    print(dict)
 # Notion APIキーを設定
     notion = Client(auth=NOTION_API_KEY)
 
@@ -97,13 +98,30 @@ def add_notion(dict,images,database_id,NOTION_API_KEY):
             "children": [
                 {
                     "object": "block",
+                    "type": "code",
+                    "code": {
+                        "caption": [],
+                        "rich_text": [{
+                            "type": "text",
+                            "text": {
+                                "content": dict['mindmap'][:2000]
+                            }
+                        }],
+                        "language": "mermaid"
+                    }
+                }
+            ]
+            +
+            [ 
+                {
+                    "object": "block",
                     "type": "bulleted_list_item",
                     "bulleted_list_item": {
                         "rich_text": [
                             {
                                 "type": "text",
                                 "text": {
-                                    "content": text
+                                    "content": text[:2000]
                                 }
                             } 
                         ]
