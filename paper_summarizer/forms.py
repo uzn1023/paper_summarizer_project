@@ -28,7 +28,7 @@ class SignUpForm(UserCreationForm):
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
         protocol = 'https' if not settings.DEBUG else 'http'
-        return f"{protocol}://{settings.ALLOWED_HOSTS[1]}:8000/activate/{uid}/{token}/"
+        return f"{protocol}://{settings.ALLOWED_HOSTS[2]}:8000/activate/{uid}/{token}/"
 
     def save(self, commit=True):
         user = super().save(commit=False)
