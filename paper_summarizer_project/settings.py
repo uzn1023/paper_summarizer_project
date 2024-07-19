@@ -145,7 +145,7 @@ EMAIL_HOST_PASSWORD = 'jywrcuqggeyldyzq'
 EMAIL_USE_TLS = True
 
 LOGIN_URL = "/login/"
-LOGIN_REDIRECT_URL = "login"
+LOGIN_REDIRECT_URL = ""
 LOGOUT_REDIRECT_URL = "/"
 
 AUTH_USER_MODEL = 'paper_summarizer.User'

@@ -28,7 +28,7 @@ class SignUpForm(UserCreationForm):
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
         protocol = 'https' if not settings.DEBUG else 'http'
-        return f"{protocol}://{settings.ALLOWED_HOSTS[0]}:8000/activate/{uid}/{token}/"
+        return f"{protocol}://{settings.ALLOWED_HOSTS[1]}:8000/activate/{uid}/{token}/"
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -37,7 +37,7 @@ class SignUpForm(UserCreationForm):
         
         if commit:
             user.save()
-            subject = "登録確認"
+            subject = "PaperSummarizer登録確認メール"
             message_template = """
             ご登録ありがとうございます。
             以下URLをクリックして登録を完了してください。
