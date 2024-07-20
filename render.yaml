@@ -11,7 +11,7 @@ services:
     env: python
     region: singapore
     buildCommand: './build.sh'
-    startCommand: 'gunicorn paper_summarizer_project.wsgi:application'
+    startCommand: 'gunicorn paper_summarizer_project.wsgi:application --timeout 300'
     plan: free
     branch: main
     healthCheckPath: /
